@@ -71,12 +71,9 @@ const PlannerMain = () => {
 
     // 서버와 바로 연동
     axios
-      .put(`${BASE_URL}/todo-update`, {
-        todos: newTodos,
-      })
+      .post(`${BASE_URL}/todo-create`, newTodos)
       .then((response) => {
         // 비동기 이슈, 서버에 업데이트가 되고 resolve되서 응답올 때, get요청
-
         getTodos();
       })
       .catch((error) => {
@@ -153,10 +150,9 @@ const PlannerMain = () => {
   // 투두 Update하는 코드 입니다.
   const onClickUpdate = async (id) => {
     const selectedTodo = todos.filter((todo) => todo.id === id);
+
+    // 두글자 미만 입력시 제어하는 로직
     if (selectedTodo[0].title.length < 2) {
-      // alert방식
-      // alert("두글자 이상 입력해주세요.");
-      // state변경 방식
       selectedTodo[0].inputMessage = "두글자 이상 입력해주세요.";
       setTodos([...todos]);
       return; // 추가 버튼 실행하지 않음
@@ -166,17 +162,14 @@ const PlannerMain = () => {
       if (todo.id === id) {
         todo.updateMode = false;
       }
-      return todo;
+      return todo.id === id;
     });
 
     await axios
-      .put(`${BASE_URL}/todo-update`, {
-        todos: newTodos,
-      })
+      .put(`${BASE_URL}/todo-update`, newTodos)
       .then((response) => {
-        // 비동기 이슈, 서버에 업데이트가 되고 resolve되서 응답올 때, get요청
-
-        getTodos();
+        // 비동기 처리
+        setTodos(response.data);
       })
       .catch((error) => {
         // Handle error
@@ -188,13 +181,10 @@ const PlannerMain = () => {
   const onClickDelete = async (id) => {
     // const filteredTodos = todosData.todos.filter((todo) => todo.id !== id);
     // 해당 제거로직은 서버코드에서 작성
+    console.log("id", id);
 
     await axios
-      .delete(`${BASE_URL}/todo-delete`, {
-        data: {
-          id,
-        },
-      })
+      .delete(`${BASE_URL}/todo-delete`, { data: { id } })
       .then((response) => {
         // 비동기 이슈, 서버에 delete가 된 이후에 get요청
         // Handle success
@@ -209,21 +199,20 @@ const PlannerMain = () => {
 
   // checkbox, 투두 완료여부 상태변경
   const checkBoxHandler = (e) => {
-    const anotherTodos = todos.map((todo) => {
+    const anotherTodos = todos.filter((todo) => {
       if (todo.id === e.target.id) {
         todo.isCompleted = !todo.isCompleted;
       }
-      return todo;
+      return todo.id === e.target.id;
     });
 
     axios
-      .put(`${BASE_URL}/todo-update`, {
-        todos: anotherTodos,
-      })
+      .put(`${BASE_URL}/todo-iscompleted`, anotherTodos)
       .then((response) => {
         // 비동기 이슈, 서버에 업데이트가 되고 resolve되서 응답올 때, get요청
-
-        getTodos();
+        // getTodos();
+        // console.log(response);
+        setTodos(response.data);
       })
       .catch((error) => {
         // Handle error
