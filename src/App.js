@@ -6,12 +6,6 @@ function App() {
   return (
     <StContainer>
       <Router />
-
-      {/* <StTitleBox>
-      <StImgBox1>
-        <img src={todoSvg} alt='todoSvg' />
-      </StImgBox1>
-    </StTitleBox> */}
     </StContainer>
   );
 }
@@ -22,6 +16,10 @@ const StContainer = styled.div`
   height: 100vh;
   overflow: hidden;
   background: #ccc;
+
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
 `;
 
 export default App;

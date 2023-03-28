@@ -70,7 +70,7 @@ const LineChart = () => {
           passive: true,
         },
       }}
-      opts={{ width: "580%" }}
+      opts={{ width: "550%" }}
       style={{
         boxSizing: "border-box",
         height: "100%",

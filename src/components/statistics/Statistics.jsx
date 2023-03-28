@@ -172,8 +172,6 @@ const Statistics = () => {
 export default Statistics;
 
 const StRootDiv = styled.div`
-  box-sizing: border-box;
-
   #header {
     box-sizing: border-box;
     height: 10vh;
@@ -367,12 +365,12 @@ const StRootDiv = styled.div`
 
       .subTitle {
         box-sizing: border-box;
+        height: 15%;
+        width: 100%;
         padding: 3% 0 0 4%;
         gap: 1%;
         font-size: 2.2vh;
         font-weight: 600;
-        height: 15%;
-        width: 100%;
         display: flex;
         flex-direction: row;
         align-items: center;
