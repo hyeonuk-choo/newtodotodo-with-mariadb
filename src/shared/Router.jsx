@@ -4,6 +4,7 @@ import MainPage from "../pages/MainPage";
 import PlannerPage from "../pages/PlannerPage";
 import StatisticsPage from "../pages/StatisticsPage";
 import Layout from "../components/utils/Layout";
+import PrevLogin from "../components/login/prev/PrevLogin";
 
 const Router = () => {
   return (

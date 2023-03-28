@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { __googleLogin } from "../../redux/modules/loginSlice";
+import { __googleLogin } from "../../../redux/modules/loginSlice";
 import todoSvg from "../../assets/img/todoSvg.svg";
 import styled, { keyframes } from "styled-components";
 
@@ -55,7 +55,7 @@ const GoogleLogin = ({ setToken }) => {
     <StContainer>
       <StTitleBox>
         <StImgBox1>
-          <img src={todoSvg} alt='todoSvg' />
+          <img src={todoSvg} alt="todoSvg" />
         </StImgBox1>
       </StTitleBox>
     </StContainer>

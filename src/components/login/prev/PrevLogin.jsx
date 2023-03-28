@@ -1,14 +1,8 @@
 import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import logo from "../../assets/img/loginPage/logo.svg";
-import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
-import Naver from "./Naver";
-import kakaoUnion from "../../assets/img/loginPage/kakaoUnion.svg";
-import googleUnion from "../../assets/img/loginPage/googleUnion.svg";
-import { useState } from "react";
-import Layout from "../utils/Layout";
+import Layout from "../../utils/Layout";
 
-const Login = () => {
+const PrevLogin = () => {
   //카카오 로그인
   const KAKAO_REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY;
   const KAKAO_REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
@@ -32,15 +26,14 @@ const Login = () => {
         {/* 고등학생을 위한 투두리스트 텍스트로 변경하기 */}
         <StPhrases>고등학생을 위한 투두리스트</StPhrases>
         <StLogobox>
-          <StLogo src={logo} />
-          <StLogoPencil src={logoPencil} />
+          <StLogoPencil />
         </StLogobox>
 
         <StLoginBtnbox>
           <StKakaoBtn onClick={onKakaoLoginHandler}>
             <StBtnBox>
               <div>
-                <StKakaoBtnImg src={kakaoUnion} alt="kakaoUnionIcon" />
+                <StKakaoBtnImg alt="kakaoUnionIcon" />
               </div>
               <StKakaoBtnFont>카카오 로그인</StKakaoBtnFont>
             </StBtnBox>
@@ -49,7 +42,7 @@ const Login = () => {
           <StGoogleBtn onClick={onGoogleLoginHandler}>
             <StBtnBox>
               <div>
-                <StGoogleBtnImg src={googleUnion} alt="googleUnionIcon" />
+                <StGoogleBtnImg alt="googleUnionIcon" />
               </div>
               <StGoogleBtnFont>구글 로그인</StGoogleBtnFont>
             </StBtnBox>
@@ -60,7 +53,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default PrevLogin;
 
 const layoutShow = keyframes`
   0% {
@@ -92,55 +85,6 @@ const StLoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #fff;
-  /* opacity:0; */
-  /* animation: ${layoutShow} 1s 5s alternate ease both; */
-
-  /* @media screen and (min-height: 667px) {
-  height:667px;
-  }
-  
-  @media screen and (min-height: 736px) {
-  height:736px;
-  }
-  @media screen and (min-height: 740px) {
-  height:740px;
-  }
-
-  @media screen and (min-height: 800px) {
-  height:800px;
-  }
-
-  @media screen and (min-height: 812px) {
-  height:812px;
-  }
-
-  @media screen and (min-height: 844px) {
-  height:844px;
-  }
-
-  @media screen and (min-height: 851px) {
-  height:851px;
-  }
-
-@media screen and (min-height: 896px) {
-  height:896px;
-  }
-
-  @media screen and (min-height: 915px) {
-  height:915px;
-  }
-
-  @media screen and (min-height: 1024px) {
-  height:1024px;
-  }
-
-  @media screen and (min-height: 1180px) {
-  height:1180px;
-  }
-
-  @media screen and (min-height: 1366px) {
-  height:1366px;
-  } */
 `;
 
 const StLogobox = styled.div``;

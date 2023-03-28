@@ -31,12 +31,8 @@ const Statistics = () => {
     dispatch(getUserInfo());
   }, []);
 
-  const lastWeekRate = userInfo.achievementRate
-    ? userInfo.achievementRate?.lastWeekRate
-    : 0;
-  const thisWeekRate = userInfo.achievementRate
-    ? userInfo.achievementRate?.thisWeekRate
-    : 0;
+  const lastWeekRate = userInfo ? userInfo.lastWeekRate : 0;
+  const thisWeekRate = userInfo ? userInfo?.thisWeekRate : 0;
 
   return (
     <StRootDiv>
@@ -58,15 +54,15 @@ const Statistics = () => {
             <div id="weekScore">
               <div>주간점수</div>
               <div className="scoreText">
-                {userInfo.weekScore?.weekScore}점&nbsp;/&nbsp;
-                {userInfo.weekScore?.weekRank}위
+                {userInfo?.weekScore}점&nbsp;/&nbsp;
+                {userInfo?.weekRank}위
               </div>
             </div>
             <div id="monthScore">
               <div>월간점수</div>
               <div className="scoreText">
-                {userInfo.monthScore?.monthScore}점&nbsp;/&nbsp;
-                {userInfo.monthScore?.monthRank}위
+                {userInfo?.monthScore}점&nbsp;/&nbsp;
+                {userInfo?.monthRank}위
               </div>
             </div>
           </div>

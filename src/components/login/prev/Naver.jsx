@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import NaverUnion from "../../assets/img/loginPage/NaverUnion.svg";
+
 import styled from "styled-components";
 
 const Naver = () => {
@@ -40,9 +40,9 @@ const Naver = () => {
   };
   return (
     <>
-      <div ref={naverRef} id='naverIdLogin'></div>
+      <div ref={naverRef} id="naverIdLogin"></div>
       <StNaverLoginBtn onClick={handleClick}>
-        <StNaverBtnImg src={NaverUnion} />
+        <StNaverBtnImg />
         <StNaverBtnFont>네이버 로그인</StNaverBtnFont>
       </StNaverLoginBtn>
     </>
