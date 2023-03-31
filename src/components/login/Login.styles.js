@@ -39,23 +39,25 @@ export const Title = styled.div`
   font-weight: bold;
 
   #upper-upper {
-    font-size: 1.5rem;
+    font-size: 3vh;
     color: #ff8c0a;
   }
 
   #upper-lower {
-    font-size: 4rem;
+    font-size: 8vh;
     color: ${orange};
   }
 `;
 
 export const LoginTitle = styled.div`
   box-sizing: border-box;
-  font-size: 2rem;
+  font-size: 4vh;
   font-weight: bold;
 `;
 
 export const Form = styled.form`
+  width: 50%;
+
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

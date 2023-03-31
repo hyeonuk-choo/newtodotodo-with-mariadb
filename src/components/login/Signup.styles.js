@@ -33,31 +33,64 @@ export const Title = styled.div`
   font-weight: bold;
 
   #upper-upper {
-    font-size: 1.5rem;
+    font-size: 3vh;
     color: #ff8c0a;
   }
 
   #upper-lower {
-    font-size: 4rem;
+    font-size: 8vh;
     color: ${orange};
   }
 `;
 
 export const SignupTitle = styled.div`
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 4vh;
   font-weight: bold;
 `;
 
 export const Form = styled.form`
+  width: 50%;
   display: flex;
   flex-direction: column;
 `;
 
+export const InputContainer = styled.div`
+  box-sizing: border-box;
+  padding-bottom: 0.7rem;
+
+  label {
+    box-sizing: border-box;
+    margin-bottom: 0.5vh;
+    display: inline-block;
+  }
+
+  .input-Button-container {
+    position: relative;
+  }
+`;
+
+export const CheckButton = styled.button`
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  padding: 0 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5vh;
+  color: rgb(0, 172, 193);
+
+  &:hover {
+    font-weight: bold;
+  }
+`;
+
 export const Input = styled.input`
+  box-sizing: border-box;
+  width: 100%;
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  margin-bottom: 1rem;
   border: none;
   border-radius: 0.25rem;
   background-color: #e0e0e0;
@@ -81,4 +114,15 @@ export const Button = styled.button`
   &:focus {
     outline: none;
   }
+`;
+
+export const ErrorMsg = styled.div`
+  color: red;
+  font-size: 12px;
+`;
+
+export const SuccessMsg = styled.div`
+  color: green;
+  font-size: 16px;
+  margin-top: 10px;
 `;
