@@ -15,6 +15,7 @@ import {
   CheckButton,
   UserMessage,
   EmailMessage,
+  PasswordMessage,
 } from "./Signup.styles";
 
 const Signup = () => {
@@ -32,8 +33,21 @@ const Signup = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  const handleUsernameCheck = async (e) => {
+  const onClickUsernameCheck = async (e) => {
     e.preventDefault();
+
+    // Validation
+    // const regex = /^(?=.*[가-힣a-zA-Z0-9]).{2,10}$/;
+    const regex = /^[가-힣a-zA-Z0-9]{2,10}$/;
+    // 입력이 없을 때, 입력이 있을 때
+    if (username.length < 1) {
+      setUsernameMsg("사용자 이름을 입력하세요");
+      return;
+    } else if (!regex.test(username)) {
+      setUsernameMsg("이름은 2자이상 10자이내, 한글/영문/숫자만 가능");
+      return;
+    }
+
     try {
       const response = await axios.post(`${BASE_URL}/username-check`, {
         username,
@@ -50,7 +64,7 @@ const Signup = () => {
     }
   };
 
-  const handleEmailCheck = async (e) => {
+  const onClickEmailCheck = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL}/email-check`, {
@@ -69,11 +83,10 @@ const Signup = () => {
   };
 
   const handlePasswordCheck = (password) => {
-    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    const regex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
     if (!regex.test(password)) {
-      setPasswordMsg(
-        "비밀번호는 최소 8자 이상, 대/소문자, 숫자, 특수문자를 모두 포함해야 합니다."
-      );
+      setPasswordMsg("비밀번호는 8자 이상, 영문/숫자/특수문자 포함.");
       setPasswordValid(false);
     } else {
       setPasswordMsg("");
@@ -81,16 +94,27 @@ const Signup = () => {
     }
   };
 
+  const handleUsernameChange = (e) => {
+    // 입력자체도 10자까지만 가능하게함
+    const inputVal = e.target.value;
+    setUsername(inputVal.slice(0, 10));
+
+    // 입력하는 동안에 유효성 검증 초기화
+    setUsernameValid(false);
+
+    // 입력하는 동안 Validation 및 메세지 안내
+    const regex = /^[가-힣a-zA-Z0-9]{2,10}$/;
+    if (!regex.test(username)) {
+      setUsernameMsg("이름은 2자이상 10자이내, 한글/영문/숫자만 가능");
+    } else {
+      setUsernameMsg("");
+    }
+  };
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setEmailValid(false);
     setEmailMsg("");
-  };
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    setUsernameValid(false);
-    setUsernameMsg("");
   };
 
   const handlePasswordChange = (e) => {
@@ -107,12 +131,12 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!emailValid) {
-      setEmailMsg("이메일 중복 확인이 필요합니다.");
-      return;
-    }
     if (!usernameValid) {
       setUsernameMsg("사용자 이름 중복 확인이 필요합니다.");
+      return;
+    }
+    if (!emailValid) {
+      setEmailMsg("이메일 중복 확인이 필요합니다.");
       return;
     }
     if (!passwordValid) {
@@ -155,11 +179,11 @@ const Signup = () => {
               <Input
                 type="text"
                 id="username"
-                placeholder="사용자 이름"
+                placeholder="영문/한글/숫자 2자이상 10자이내"
                 value={username}
                 onChange={handleUsernameChange}
               />
-              <CheckButton onClick={handleUsernameCheck}>중복체크</CheckButton>
+              <CheckButton onClick={onClickUsernameCheck}>중복체크</CheckButton>
             </div>
           </InputContainer>
 
@@ -175,7 +199,7 @@ const Signup = () => {
                 value={email}
                 onChange={handleEmailChange}
               />
-              <CheckButton onClick={handleEmailCheck}>중복체크</CheckButton>
+              <CheckButton onClick={onClickEmailCheck}>중복체크</CheckButton>
             </div>
           </InputContainer>
 
@@ -204,7 +228,7 @@ const Signup = () => {
             />
           </InputContainer>
 
-          <passwordMessage>{passwordMsg}</passwordMessage>
+          <PasswordMessage>{passwordMsg}</PasswordMessage>
 
           <Button type="submit">회원가입</Button>
         </Form>

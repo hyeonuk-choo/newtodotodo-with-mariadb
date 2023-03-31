@@ -49,7 +49,7 @@ export const SignupTitle = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
 `;
@@ -80,9 +80,10 @@ export const CheckButton = styled.button`
   cursor: pointer;
   font-size: 1.5vh;
   color: rgb(0, 172, 193);
+  font-weight: bold;
 
   &:hover {
-    font-weight: bold;
+    color: ${orange};
   }
 `;
 
@@ -117,25 +118,32 @@ export const Button = styled.button`
 `;
 
 export const UserMessage = styled.div`
-  color: ${(props) => (props.usernameValid ? "green" : "red")};
+  color: ${(props) => (props.usernameValid ? "rgb(0, 172, 193)" : "red")};
   font-size: 1.3vh;
+  font-weight: bold;
   text-align: right;
 `;
 
 export const EmailMessage = styled.div`
-  color: ${(props) => (props.emailValid ? "green" : "red")};
+  color: ${(props) => (props.emailValid ? "rgb(0, 172, 193)" : "red")};
   font-size: 1.3vh;
+  font-weight: bold;
   text-align: right;
 `;
 
-export const passwordMessage = styled.div`
-  color: ${(props) => (props.usernameValid ? "green" : "red")};
+export const PasswordMessage = styled.div`
+  box-sizing: border-box;
+  padding-bottom: 1vh;
+
+  color: ${(props) => (props.usernameValid ? "rgb(0, 172, 193)" : "red")};
   font-size: 1.3vh;
+  font-weight: bold;
   text-align: right;
 `;
 
 export const SuccessMsg = styled.div`
   color: green;
   font-size: 16px;
+  font-weight: bold;
   margin-top: 10px;
 `;
