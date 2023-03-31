@@ -56,7 +56,7 @@ export const Form = styled.form`
 
 export const InputContainer = styled.div`
   box-sizing: border-box;
-  padding-bottom: 0.7rem;
+  padding-bottom: 0.5vh;
 
   label {
     box-sizing: border-box;
@@ -116,9 +116,22 @@ export const Button = styled.button`
   }
 `;
 
-export const ErrorMsg = styled.div`
-  color: red;
-  font-size: 12px;
+export const UserMessage = styled.div`
+  color: ${(props) => (props.usernameValid ? "green" : "red")};
+  font-size: 1.3vh;
+  text-align: right;
+`;
+
+export const EmailMessage = styled.div`
+  color: ${(props) => (props.emailValid ? "green" : "red")};
+  font-size: 1.3vh;
+  text-align: right;
+`;
+
+export const passwordMessage = styled.div`
+  color: ${(props) => (props.usernameValid ? "green" : "red")};
+  font-size: 1.3vh;
+  text-align: right;
 `;
 
 export const SuccessMsg = styled.div`

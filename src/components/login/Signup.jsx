@@ -10,15 +10,18 @@ import {
   Title,
   Input,
   Button,
-  ErrorMsg,
   SuccessMsg,
   InputContainer,
   CheckButton,
+  UserMessage,
+  EmailMessage,
 } from "./Signup.styles";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(false);
   const [username, setUsername] = useState("");
   const [emailMsg, setEmailMsg] = useState("");
   const [usernameMsg, setUsernameMsg] = useState("");
@@ -29,33 +32,12 @@ const Signup = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  const handleEmailCheck = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("https://example.com/api/emailcheck", {
-        email,
-      });
-      if (response.data.exists) {
-        setEmailMsg("이미 사용중인 이메일입니다.");
-        setEmailValid(false);
-      } else {
-        setEmailMsg("사용 가능한 이메일입니다.");
-        setEmailValid(true);
-      }
-    } catch (error) {
-      console.error("Email check failed:", error);
-    }
-  };
-
   const handleUsernameCheck = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://example.com/api/usernamecheck",
-        {
-          username,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/username-check`, {
+        username,
+      });
       if (response.data.exists) {
         setUsernameMsg("이미 사용중인 사용자 이름입니다.");
         setUsernameValid(false);
@@ -65,6 +47,24 @@ const Signup = () => {
       }
     } catch (error) {
       console.error("Username check failed:", error);
+    }
+  };
+
+  const handleEmailCheck = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${BASE_URL}/email-check`, {
+        email,
+      });
+      if (response.data.exists) {
+        setEmailValid(false);
+        setEmailMsg("이미 사용중인 이메일입니다.");
+      } else {
+        setEmailValid(true);
+        setEmailMsg("사용 가능한 이메일입니다.");
+      }
+    } catch (error) {
+      console.error("Email check failed:", error);
     }
   };
 
@@ -100,6 +100,11 @@ const Signup = () => {
     handlePasswordCheck(e.target.value);
   };
 
+  const handlePasswordConfirmChange = (e) => {
+    setPasswordConfirm(e.target.value);
+    setPasswordMatch(e.target.value === password);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!emailValid) {
@@ -112,6 +117,10 @@ const Signup = () => {
     }
     if (!passwordValid) {
       setPasswordMsg("비밀번호 유효성 검사를 통과해야 합니다.");
+      return;
+    }
+    if (!passwordMatch) {
+      setPasswordMsg("비밀번호가 일치하지 않습니다.");
       return;
     }
 
@@ -154,7 +163,7 @@ const Signup = () => {
             </div>
           </InputContainer>
 
-          <ErrorMsg>{usernameMsg}</ErrorMsg>
+          <UserMessage usernameValid={usernameValid}>{usernameMsg}</UserMessage>
 
           <InputContainer>
             <label htmlFor="email">이메일*</label>
@@ -162,7 +171,7 @@ const Signup = () => {
               <Input
                 type="text"
                 id="email"
-                placeholder="example@gmail.com"
+                placeholder="이메일"
                 value={email}
                 onChange={handleEmailChange}
               />
@@ -170,7 +179,7 @@ const Signup = () => {
             </div>
           </InputContainer>
 
-          <ErrorMsg>{emailMsg}</ErrorMsg>
+          <EmailMessage emailValid={emailValid}>{emailMsg}</EmailMessage>
 
           <InputContainer>
             <label htmlFor="password">비밀번호*</label>
@@ -178,6 +187,7 @@ const Signup = () => {
               type="password"
               id="password"
               placeholder="비밀번호"
+              name="password"
               value={password}
               onChange={handlePasswordChange}
             />
@@ -186,14 +196,15 @@ const Signup = () => {
             <label htmlFor="password">비밀번호 확인*</label>
             <Input
               type="password"
-              id="password"
-              placeholder="비밀번호"
-              value={password}
-              onChange={handlePasswordChange}
+              id="password-confirm"
+              placeholder="비밀번호 확인"
+              name="passwordConfirm"
+              value={passwordConfirm}
+              onChange={handlePasswordConfirmChange}
             />
           </InputContainer>
 
-          <ErrorMsg>{passwordMsg}</ErrorMsg>
+          <passwordMessage>{passwordMsg}</passwordMessage>
 
           <Button type="submit">회원가입</Button>
         </Form>
