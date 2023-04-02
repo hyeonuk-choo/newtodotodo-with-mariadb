@@ -64,12 +64,15 @@ export const Form = styled.form`
 `;
 
 export const Input = styled.input`
+  box-sizing: border-box;
+  width: 100%;
   padding: 0.75rem 1rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin-bottom: 1rem;
   border: none;
   border-radius: 0.25rem;
-  background-color: #e0e0e0;
+  background-color: rgb(255 242 207);
+
   &:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);

@@ -19,16 +19,16 @@ import {
 } from "./Signup.styles";
 
 const Signup = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(false);
-  const [username, setUsername] = useState("");
   const [emailMsg, setEmailMsg] = useState("");
   const [usernameMsg, setUsernameMsg] = useState("");
   const [passwordMsg, setPasswordMsg] = useState("");
-  const [emailValid, setEmailValid] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(false);
   const [usernameValid, setUsernameValid] = useState(false);
+  const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -66,6 +66,19 @@ const Signup = () => {
 
   const onClickEmailCheck = async (e) => {
     e.preventDefault();
+
+    // 이메일 유효성 검사 정규식
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (email.trim() === "") {
+      setEmailValid(false);
+      setEmailMsg("이메일을 입력해주세요.");
+      return;
+    } else if (!emailRegex.test(email)) {
+      setEmailValid(false);
+      setEmailMsg("유효한 이메일 주소를 입력해주세요.");
+      return;
+    }
+
     try {
       const response = await axios.post(`${BASE_URL}/email-check`, {
         email,
@@ -82,18 +95,6 @@ const Signup = () => {
     }
   };
 
-  const handlePasswordCheck = (password) => {
-    const regex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
-
-    if (!regex.test(password)) {
-      setPasswordMsg("비밀번호는 8자 이상, 영문/숫자/특수문자 포함.");
-      setPasswordValid(false);
-    } else {
-      setPasswordMsg("");
-      setPasswordValid(true);
-    }
-  };
-
   const handleUsernameChange = (e) => {
     // 입력자체도 10자까지만 가능하게함
     const inputVal = e.target.value;
@@ -104,7 +105,7 @@ const Signup = () => {
 
     // 입력하는 동안 Validation 및 메세지 안내
     const regex = /^[가-힣a-zA-Z0-9]{2,10}$/;
-    if (!regex.test(username)) {
+    if (!regex.test(e.target.value)) {
       setUsernameMsg("이름은 2자이상 10자이내, 한글/영문/숫자만 가능");
     } else {
       setUsernameMsg("");
@@ -112,21 +113,57 @@ const Signup = () => {
   };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    setEmailValid(false);
-    setEmailMsg("");
+    // 입력자체도 10자까지만 가능하게함
+    const emailVal = e.target.value;
+    setEmail(emailVal);
+
+    // 이메일 유효성 검사 정규식
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (emailVal.trim() === "") {
+      setEmailValid(false);
+      setEmailMsg("이메일을 입력해주세요.");
+    } else if (!emailRegex.test(emailVal)) {
+      setEmailValid(false);
+      setEmailMsg("유효한 이메일 주소를 입력해주세요.");
+    } else {
+      setEmailMsg("");
+    }
+  };
+
+  const handlePasswordCheck = (password) => {
+    const regex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
+    if (!regex.test(password)) {
+      setPasswordMsg("비밀번호는 8자 이상, 영문/숫자/특수문자 포함.");
+      setPasswordMatch(false);
+      setPasswordValid(false);
+      return;
+    } else if (passwordConfirm === password) {
+      setPasswordMsg("비밀번호가 일치합니다");
+      setPasswordMatch(true);
+      setPasswordValid(true);
+    } else {
+      setPasswordMsg("비밀번호가 일치하지 않습니다");
+      setPasswordMatch(false);
+      setPasswordValid(false);
+    }
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    setPasswordValid(false);
-    setPasswordMsg("");
     handlePasswordCheck(e.target.value);
   };
 
   const handlePasswordConfirmChange = (e) => {
     setPasswordConfirm(e.target.value);
+    setPasswordValid(false);
     setPasswordMatch(e.target.value === password);
+    if (e.target.value === password) {
+      setPasswordMsg("비밀번호가 일치합니다");
+      setPasswordValid(true);
+    } else {
+      setPasswordMsg("비밀번호가 일치하지 않습니다");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -140,6 +177,7 @@ const Signup = () => {
       return;
     }
     if (!passwordValid) {
+      console.log(passwordValid);
       setPasswordMsg("비밀번호 유효성 검사를 통과해야 합니다.");
       return;
     }
@@ -149,10 +187,10 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post("https://example.com/api/signup", {
+      const response = await axios.post(`${BASE_URL}/sign-up`, {
+        username,
         email,
         password,
-        username,
       });
 
       console.log("Signup successful:", response.data);
@@ -228,7 +266,9 @@ const Signup = () => {
             />
           </InputContainer>
 
-          <PasswordMessage>{passwordMsg}</PasswordMessage>
+          <PasswordMessage passwordMatch={passwordMatch}>
+            {passwordMsg}
+          </PasswordMessage>
 
           <Button type="submit">회원가입</Button>
         </Form>

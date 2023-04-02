@@ -91,10 +91,12 @@ export const Input = styled.input`
   box-sizing: border-box;
   width: 100%;
   padding: 0.75rem 1rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   border: none;
   border-radius: 0.25rem;
-  background-color: #e0e0e0;
+  background-color: rgb(255 242 207);
+  font-family: "Gowun Dodum", sans-serif;
+
   &:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -135,7 +137,7 @@ export const PasswordMessage = styled.div`
   box-sizing: border-box;
   padding-bottom: 1vh;
 
-  color: ${(props) => (props.usernameValid ? "rgb(0, 172, 193)" : "red")};
+  color: ${(props) => (props.passwordMatch ? "rgb(0, 172, 193)" : "red")};
   font-size: 1.3vh;
   font-weight: bold;
   text-align: right;
