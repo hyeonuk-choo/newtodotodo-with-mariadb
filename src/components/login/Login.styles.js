@@ -56,7 +56,7 @@ export const LoginTitle = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 50%;
+  width: 55%;
 
   box-sizing: border-box;
   display: flex;
@@ -66,12 +66,14 @@ export const Form = styled.form`
 export const Input = styled.input`
   box-sizing: border-box;
   width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1.1rem;
+  height: 5vh;
+  padding: 1.5vh;
+  font-size: 1.8vh;
   margin-bottom: 1rem;
   border: none;
   border-radius: 0.25rem;
   background-color: rgb(255 242 207);
+  font-family: "Gowun Dodum", sans-serif;
 
   &:focus {
     outline: none;
@@ -80,8 +82,8 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
+  height: 5vh;
+  font-size: 1.8vh;
   color: white;
   border: none;
   border-radius: 0.25rem;

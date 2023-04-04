@@ -90,8 +90,9 @@ export const CheckButton = styled.button`
 export const Input = styled.input`
   box-sizing: border-box;
   width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1.1rem;
+  height: 5vh;
+  padding: 1.5vh;
+  font-size: 1.8vh;
   border: none;
   border-radius: 0.25rem;
   background-color: rgb(255 242 207);
@@ -104,8 +105,8 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
+  height: 5vh;
+  font-size: 1.8vh;
   color: white;
   background-color: #00acc1;
   border: none;
