@@ -1,6 +1,6 @@
 // 라이브러리
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // 컴포넌트
@@ -13,21 +13,28 @@ import {
   LoginTitle,
 } from "./Login.styles";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://example.com/api/login", {
+      const response = await axios.post(`${BASE_URL}/login`, {
         email,
         password,
       });
-
-      console.log("Login successful:", response.data);
-      // 로그인 성공 후 처리 작업
+      const { token } = response.data;
+      console.log("token", token);
+      if (token) {
+        onLogin(token);
+        navigate("/main");
+      } else {
+        console.log("Invalid email or password");
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }
