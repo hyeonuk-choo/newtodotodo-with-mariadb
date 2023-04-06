@@ -42,9 +42,9 @@ const Main = () => {
         <div className="mainTopSentenceBox">
           <span>투두투두</span>
           <div className="mainTopSentence">
-            {userInfo?.nickname === undefined
+            {userInfo?.username === undefined
               ? "닉네임을 설정해주세요^^"
-              : `${userInfo.nickname}님, 오늘도 힘내세요!`}
+              : `${userInfo.username}님, 오늘도 힘내세요!`}
           </div>
         </div>
 
@@ -53,9 +53,9 @@ const Main = () => {
       <StSubDiv2>
         <div className="achievementBox">
           <div className="nicknamePart">
-            {userInfo?.nickname === undefined
+            {userInfo?.username === undefined
               ? "닉네임이 미설정 상태입니다."
-              : `${userInfo.nickname}님의 기록`}
+              : `${userInfo.username}님의 기록`}
           </div>
           <div className="todoCnt">
             <img src={plannerCntSvg} alt="todoCntSvgImg" />

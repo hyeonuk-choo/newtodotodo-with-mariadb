@@ -224,22 +224,7 @@ const PlannerMain = () => {
     <StRootDiv>
       {/* ------------ 투두 헤더 -------------*/}
       <div className="header">
-        <span>{userInfo.nickname}님의 플래너</span>
-        {/* <div className="categoryBox">
-            <StDateInput
-              type="date"
-              min={1}
-              max="2030-12-31"
-              name="selectedDate"
-              onChange={(e) => {}}
-            ></StDateInput>
-          </div>
-          <img
-            className="category"
-            src={categorySvg}
-            alt="categoryIcon"
-            onClick={() => {}}
-          /> */}
+        <span>{userInfo?.username}님의 플래너</span>
       </div>
 
       {/* -------- 투두 바디부분 시작 ---------*/}

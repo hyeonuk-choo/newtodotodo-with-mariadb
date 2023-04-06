@@ -37,7 +37,7 @@ const Statistics = () => {
   return (
     <StRootDiv>
       <div id="header">
-        <span>{userInfo.nickname}님의 통계</span>
+        <span>{userInfo?.username}님의 통계</span>
       </div>
       <div id="body">
         {/* -- 바디의 상단 파트 -- */}
