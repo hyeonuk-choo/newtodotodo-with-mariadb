@@ -90,7 +90,11 @@ const initialState = {
 export const loginSlice = createSlice({
   name: "loginSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.token = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAuthentication.pending, (state) => {
@@ -144,5 +148,5 @@ export const loginSlice = createSlice({
   },
 });
 
-export const {} = loginSlice.actions;
+export const { logout } = loginSlice.actions;
 export default loginSlice.reducer;
