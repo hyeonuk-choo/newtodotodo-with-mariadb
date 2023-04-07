@@ -20,7 +20,7 @@ const PlannerMain = () => {
   const uniqueId = uuidv4();
   const [todos, setTodos] = useState([]);
   const [modalId, setModalId] = useState(null);
-  const token1 = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   // 클릭한 DOM요소의 id를 state값으로 가져오기
   const handleDivClick = (id) => {
@@ -51,7 +51,7 @@ const PlannerMain = () => {
     }
   };
 
-  // 투두 추가하기 버튼 + post요청
+  // 투두 추가하기 버튼 & post요청
   const onClickAddButton = (id) => {
     const selectedOne = todos.filter((todo) => todo.id === id);
     if (selectedOne[0].title.length < 2) {
@@ -107,6 +107,7 @@ const PlannerMain = () => {
     setTodos([
       {
         id: uniqueId,
+        user_id: userInfo.id,
         title: "",
         content: "",
         updateMode: false,
@@ -122,7 +123,7 @@ const PlannerMain = () => {
     axios
       .get(`${BASE_URL}/planner-main`, {
         headers: {
-          Authorization: `Bearer ${token1}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((data) => {
@@ -132,7 +133,7 @@ const PlannerMain = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserInfo(token1));
+    dispatch(getUserInfo(token));
   }, []);
 
   useEffect(() => {
@@ -210,7 +211,11 @@ const PlannerMain = () => {
     });
 
     axios
-      .put(`${BASE_URL}/todo-iscompleted`, anotherTodos)
+      .put(`${BASE_URL}/todo-iscompleted`, anotherTodos, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         // 비동기 이슈, 서버에 업데이트가 되고 resolve되서 응답올 때, get요청
         // getTodos();
