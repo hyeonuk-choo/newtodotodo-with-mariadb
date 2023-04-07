@@ -20,7 +20,7 @@ const Statistics = () => {
   const dispatch = useDispatch();
   const [scoreExplain, setScoreExplain] = useState(false);
   const [graphExplain, setGraphExplain] = useState(false);
-  // const nickname = localStorage.getItem("nickname");
+  const token1 = localStorage.getItem("token");
 
   const modalHandler = (param) => {
     if (param === "score") setScoreExplain(true);
@@ -28,7 +28,7 @@ const Statistics = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserInfo());
+    dispatch(getUserInfo(token1));
   }, []);
 
   const lastWeekRate = userInfo ? userInfo.lastWeekRate : 0;

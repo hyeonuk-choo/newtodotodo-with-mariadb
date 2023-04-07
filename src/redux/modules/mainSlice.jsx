@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-// const nickname = localStorage.getItem("nickname");
+// const token = localStorage.getItem("token");
 
 const initialState = {
   userInfo: [],
@@ -20,7 +20,11 @@ export const getUserInfo = createAsyncThunk(
   "mainSlice/getUserInfo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`${BASE_URL}/userinfo`);
+      const data = await axios.get(`${BASE_URL}/userinfo`, {
+        headers: {
+          Authorization: `Bearer ${payload}`,
+        },
+      });
 
       return thunkAPI.fulfillWithValue(data.data[0]);
     } catch (error) {

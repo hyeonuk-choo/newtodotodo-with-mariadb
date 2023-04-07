@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import axios from "axios";
@@ -20,6 +20,7 @@ const PlannerMain = () => {
   const uniqueId = uuidv4();
   const [todos, setTodos] = useState([]);
   const [modalId, setModalId] = useState(null);
+  const token1 = localStorage.getItem("token");
 
   // 클릭한 DOM요소의 id를 state값으로 가져오기
   const handleDivClick = (id) => {
@@ -117,12 +118,11 @@ const PlannerMain = () => {
     ]);
   };
 
-  // get요청 코드 입니다.
   const getTodos = () => {
     axios
       .get(`${BASE_URL}/planner-main`, {
-        params: {
-          timestamp: new Date().getTime(),
+        headers: {
+          Authorization: `Bearer ${token1}`,
         },
       })
       .then((data) => {
@@ -131,10 +131,13 @@ const PlannerMain = () => {
       .catch((error) => console.error(error));
   };
 
-  useEffect(getTodos, []);
   useEffect(() => {
-    dispatch(getUserInfo());
+    dispatch(getUserInfo(token1));
   }, []);
+
+  useEffect(() => {
+    getTodos();
+  }, [userInfo]);
 
   // 투두 수정하기 토글버튼
   const onClickUpdateToggleBtn = (id) => {

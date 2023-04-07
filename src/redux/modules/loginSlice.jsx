@@ -5,13 +5,6 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const KAKAO_BASE_URL = process.env.REACT_APP_KAKAO_BASE_URL;
 const GOOGLE_BASE_URL = process.env.REACT_APP_GOOGLE_BASE_URL;
 
-const initialState = {
-  user: null,
-  nickname: null,
-  token: false,
-  nicknameCheck: null,
-};
-
 // 소셜 로그인
 export const __kakaoLogin = createAsyncThunk(
   "kakao/login",
@@ -71,44 +64,47 @@ export const __nicknameCheck = createAsyncThunk(
   }
 );
 
-export const __userInfoRegister = createAsyncThunk(
-  "userInfo/register",
+export const getAuthentication = createAsyncThunk(
+  "getAuthentication",
   async (payload, thunkAPI) => {
-    const accessToken = localStorage.getItem("accessToken");
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
     try {
-      const { data } = await axios.post(`${BASE_URL}/signup`, payload, config);
-      return thunkAPI.fulfillWithValue(data);
+      const response = await axios.post(`${BASE_URL}/login`, payload);
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+      return thunkAPI.fulfillWithValue(token);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
 
-export const __loginReissue = createAsyncThunk(
-  "loginReissue/login",
-  async (payload, thunkAPI) => {
-    try {
-      const { headers } = await axios.post(`${BASE_URL}/reissue`, payload);
-      localStorage.setItem("accessToken", headers.authorization);
-      return thunkAPI.fulfillWithValue(headers);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+const initialState = {
+  token: "",
+  user: [],
+  nickname: [],
+  nicknameCheck: [],
+  isLoading: false,
+  error: "",
+};
 
 export const loginSlice = createSlice({
   name: "loginSlice",
   initialState,
   reducers: {},
-  builder: (builder) => {
+  extraReducers: (builder) => {
     builder
+      .addCase(getAuthentication.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAuthentication.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // console.log("action.payload", action.payload);
+        state.token = action.payload;
+      })
+      .addCase(getAuthentication.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
       .addCase(__kakaoLogin.pending, (state) => {
         state.isLoading = true;
       })
@@ -144,28 +140,6 @@ export const loginSlice = createSlice({
       .addCase(__nicknameCheck.rejected, (state, action) => {
         state.isLoading = false;
         state.nicknameCheck = action.payload;
-      })
-      .addCase(__userInfoRegister.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(__userInfoRegister.fulfilled, (state, action) => {
-        state.isLoading = false;
-        // state.user
-        // state.nickname
-      })
-      .addCase(__userInfoRegister.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(__loginReissue.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(__loginReissue.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-      .addCase(__loginReissue.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
       });
   },
 });

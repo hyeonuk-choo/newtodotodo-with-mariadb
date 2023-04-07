@@ -1,5 +1,6 @@
 // 라이브러리
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -12,8 +13,10 @@ import {
   Title,
   LoginTitle,
 } from "./Login.styles";
+import { getAuthentication } from "../../redux/modules/loginSlice";
 
-const Login = ({ onLogin }) => {
+const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,22 +25,8 @@ const Login = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(`${BASE_URL}/login`, {
-        email,
-        password,
-      });
-      const { token } = response.data;
-      console.log("token", token);
-      if (token) {
-        onLogin(token);
-        navigate("/main");
-      } else {
-        console.log("Invalid email or password");
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
+    dispatch(getAuthentication({ email, password }));
+    navigate("/main");
   };
 
   return (
