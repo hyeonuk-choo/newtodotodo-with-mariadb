@@ -1,25 +1,24 @@
 // 라이브러리
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 // 이미지
 import threeDotSvg from "../../assets/img/threeDotSvg.svg";
-import ModalBasic from "../utils/ModalBasic";
 // 컴포넌트
 import Navbar from "../utils/Navbar";
 import TodoAddBtn from "./TodoAddBtn";
+import ModalBasic from "../utils/ModalBasic";
 import { getUserInfo } from "../../redux/modules/mainSlice";
 
 const PlannerMain = () => {
-  // 상태관리 라이브러리 사용하지 않고 구현
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.main); // mainSlice
   const uniqueId = uuidv4();
   const [todos, setTodos] = useState([]);
   const [modalId, setModalId] = useState(null);
+  const { userInfo } = useSelector((state) => state.main); // mainSlice
   const token = localStorage.getItem("token");
 
   // 클릭한 DOM요소의 id를 state값으로 가져오기
@@ -72,7 +71,11 @@ const PlannerMain = () => {
 
     // 서버와 바로 연동
     axios
-      .post(`${BASE_URL}/todo-create`, newTodos)
+      .post(`${BASE_URL}/todo-create`, newTodos, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         // 비동기 이슈, 서버에 업데이트가 되고 resolve되서 응답올 때, get요청
         getTodos();
@@ -88,9 +91,17 @@ const PlannerMain = () => {
     const filterTodo = todos.filter((todo) => todo.id !== id);
     // 서버와 바로 연동
     axios
-      .put(`${BASE_URL}/todo-update`, {
-        todos: filterTodo,
-      })
+      .put(
+        `${BASE_URL}/todo-update`,
+        {
+          todos: filterTodo,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         // 비동기 이슈, 서버에 업데이트가 되고 resolve되서 응답올 때, get요청
 
@@ -151,11 +162,11 @@ const PlannerMain = () => {
     setTodos(newTodos);
   };
 
-  // 투두 Update하는 코드 입니다.
+  // 할일목록 Update.
   const onClickUpdate = async (id) => {
     const selectedTodo = todos.filter((todo) => todo.id === id);
 
-    // 두글자 미만 입력시 제어하는 로직
+    // 두글자 미만 입력시 제어
     if (selectedTodo[0].title.length < 2) {
       selectedTodo[0].inputMessage = "두글자 이상 입력해주세요.";
       setTodos([...todos]);
@@ -170,7 +181,11 @@ const PlannerMain = () => {
     });
 
     await axios
-      .put(`${BASE_URL}/todo-update`, newTodos)
+      .put(`${BASE_URL}/todo-update`, newTodos, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         // 비동기 처리
         setTodos(response.data);
@@ -181,22 +196,19 @@ const PlannerMain = () => {
       });
   };
 
-  // 투두 delete를 하는 코드 입니다.
+  // 투두 삭제 코드
   const onClickDelete = async (id) => {
-    // const filteredTodos = todosData.todos.filter((todo) => todo.id !== id);
-    // 해당 제거로직은 서버코드에서 작성
-    console.log("id", id);
-
     await axios
-      .delete(`${BASE_URL}/todo-delete`, { data: { id } })
+      .delete(`${BASE_URL}/todo-delete`, {
+        data: { id },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
-        // 비동기 이슈, 서버에 delete가 된 이후에 get요청
-        // Handle success
-
         getTodos();
       })
       .catch((error) => {
-        // Handle error
         console.error(error);
       });
   };
@@ -217,13 +229,9 @@ const PlannerMain = () => {
         },
       })
       .then((response) => {
-        // 비동기 이슈, 서버에 업데이트가 되고 resolve되서 응답올 때, get요청
-        // getTodos();
-        // console.log(response);
         setTodos(response.data);
       })
       .catch((error) => {
-        // Handle error
         console.error(error);
       });
   };
