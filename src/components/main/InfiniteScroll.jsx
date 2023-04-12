@@ -46,36 +46,11 @@ const InfiniteScroll = () => {
     <Stdiv>
       {allUser.length > 0 &&
         allUser.map((each) => (
-          <StRankingBox
-            key={each.id}
-            // onClick={() => {
-            //   if (nickname === each.nickname) {
-            //     navigate(`/my`);
-            //   } else {
-            //     navigate(`/othermy/${each.nickname}`);
-            //   }
-            // }}
-          >
+          <StRankingBox key={each.id}>
             <div className="firstInner">
               <StRankingNumber>{each.rank}</StRankingNumber>
               <div>
-                {allUser.filter((data) => data.nickname === each.nickname)
-                  .length === 0 ? (
-                  <StRankingProfile src={profileImgSvg} alt="profileImg" />
-                ) : (
-                  <StRankingProfile
-                    src={
-                      allUser.filter(
-                        (data) => data.nickname === each.nickname
-                      )[0].profileImage === ""
-                        ? profileImgSvg
-                        : allUser.filter(
-                            (data) => data.nickname === each.nickname
-                          )[0].profileImage
-                    }
-                    alt="profileImg"
-                  />
-                )}
+                <StRankingProfile src={profileImgSvg} alt="profileImg" />
                 <StRankingNickname>{each.nickname}</StRankingNickname>
               </div>
             </div>

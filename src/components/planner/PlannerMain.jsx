@@ -86,31 +86,10 @@ const PlannerMain = () => {
       });
   };
 
-  // 투두추가를 취소하는 버튼
+  // 투두추가 취소 버튼
   const onClickCancel = (id) => {
     const filterTodo = todos.filter((todo) => todo.id !== id);
-    // 서버와 바로 연동
-    axios
-      .put(
-        `${BASE_URL}/todo-update`,
-        {
-          todos: filterTodo,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        // 비동기 이슈, 서버에 업데이트가 되고 resolve되서 응답올 때, get요청
-
-        getTodos();
-      })
-      .catch((error) => {
-        // Handle error
-        console.error(error);
-      });
+    setTodos(filterTodo);
   };
 
   // 투두추가'+'버튼을 눌렀을 때, 데이터추가

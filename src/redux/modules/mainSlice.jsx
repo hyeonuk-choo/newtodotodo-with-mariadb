@@ -5,7 +5,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 // const token = localStorage.getItem("token");
 
 const initialState = {
-  userInfo: [],
+  userInfo: null,
   thisMonthRate: [],
   totalRate: [],
   totalTodo: [],
