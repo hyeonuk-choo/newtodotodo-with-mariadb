@@ -37,6 +37,16 @@ const Main = () => {
     setToggleValue(false);
   };
 
+  console.log("userInfo", userInfo);
+
+  const completeRate = userInfo
+    ? Math.round((userInfo.completeCnt / userInfo.totalCnt) * 100)
+    : 0;
+
+  const totalRate = userInfo
+    ? Math.round((userInfo.completeCnt / userInfo.totalCnt) * 100)
+    : 0;
+
   return (
     <StRootDiv>
       <StSubDiv1>
@@ -71,21 +81,14 @@ const Main = () => {
               이번달 플래너 달성률
               <div>
                 {/* reload시 View에 NaN을 0으로 대체 */}
-                {userInfo?.length === 0
-                  ? 0
-                  : Math.round(userInfo?.thisMonthRate)}
-                %
+                {totalRate}%
               </div>
             </div>
 
             <StProgressBarBox>
               {/* attribute NaN 관련 디버깅*/}
               <StProgressBar
-                width={
-                  userInfo?.length === 0
-                    ? 0
-                    : Math.round(userInfo.thisMonthRate)
-                }
+                width={isNaN(totalRate) ? 0 : totalRate}
               ></StProgressBar>
             </StProgressBarBox>
           </div>
@@ -95,16 +98,14 @@ const Main = () => {
               플래너 총 달성률
               <div>
                 {/* reload시 View에 NaN을 0으로 대체 */}
-                {userInfo?.length === 0 ? 0 : Math.round(userInfo?.totalRate)} %
+                {totalRate}%
               </div>
             </div>
 
             <StProgressBarBox>
               {/* attribute NaN 관련 디버깅*/}
               <StProgressBar
-                width={
-                  userInfo?.length === 0 ? 0 : Math.round(userInfo.totalRate)
-                }
+                width={isNaN(totalRate) ? 0 : totalRate}
               ></StProgressBar>
             </StProgressBarBox>
           </div>
@@ -300,7 +301,12 @@ const StProgressBarBox = styled.div`
 
 const StProgressBar = styled.div`
   ${({ width }) => {
-    if (width === 0) {
+    if (isNaN(width)) {
+      return css`
+        width: ${0}%;
+        background-color: none;
+      `;
+    } else if (width === 0) {
       return css`
         width: ${width}%;
         background-color: none;
