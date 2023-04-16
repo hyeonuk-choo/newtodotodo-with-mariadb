@@ -4,14 +4,21 @@
 <h3> 데모 URL : https://newtodotodo.netlify.app/ </h3>
 <br/>
 <h2>🛠 Skills </h2>
-<ul>
-  <li>React 라이브러리</li>
-   <li>Redux Toolkit으로 전역상태관리</li>
-  <li>Intersection Observer API로 무한스크롤 구현</li>
-  <li>Axios를 활용한 API 통신, CRUD구현</li>
-  <li> Styled-component를 통한 조건부 CSS</li>
-  <li>반응형 웹 제작</li>
-</ul>
+
+* 프론트엔드
+  * React 라이브러리
+  * Redux Toolkit으로 전역상태관리
+  * Intersection Observer API로 무한스크롤 구현
+  * Axios를 활용한 API 통신, CRUD구현
+  * Styled-component를 통한 조건부 CSS
+  * 반응형 웹 제작
+ 
+* 백엔드 & DB
+  * Node.js
+  * Express
+  * MariaDB
+  * Repository: https://github.com/hyeonuk-choo/express-server-with-mariadb.git
+  
 <br/>
 <h2>📝 서비스 설명 </h2>
 <ul>
