@@ -1,7 +1,14 @@
 <img width='100%' height='500' src='https://user-images.githubusercontent.com/98303004/194334684-7ee7e923-9abd-4260-b3a6-256ee2c65682.png' alt='img1'/>
-<br/>
 <h1>통계 플래너📑, <img width='120px' src='https://user-images.githubusercontent.com/98303004/194283462-7d70182b-d4d9-4291-b050-5983b0177374.png' alt='logo'/> 를 소개 합니다!</h1>
-<h3> 데모 URL : https://newtodotodo.netlify.app/ </h3>
+
+### 📪 주소 
+- 데모 URL : https://newtodotodo.netlify.app/
+<br/>
+
+### ⚙ 서비스 아키텍쳐
+
+![서비스 아키텍쳐](https://github.com/MungT/ToDoList_backend/blob/main/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png)
+<br/>
 <br/>
 <h2>🛠 Skills </h2>
 
