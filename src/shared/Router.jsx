@@ -47,17 +47,11 @@ const Router = () => {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={token ? <MainPage /> : <Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/main" element={token ? <MainPage /> : <Login />} />
-          <Route
-            path="/statistics"
-            element={token ? <StatisticsPage /> : <Login />}
-          />
-          <Route
-            path="/planner-main"
-            element={token ? <PlannerPage /> : <Login />}
-          />
+          <Route path="/main" element={<MainPage />} />
+          <Route path="/statistics" element={<StatisticsPage />} />
+          <Route path="/planner-main" element={<PlannerPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

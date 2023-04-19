@@ -18,7 +18,7 @@ const Navbar = (props) => {
   const navigate = useNavigate();
 
   const onClickHomeMenu = async () => {
-    navigate("/");
+    navigate("/main");
     setHome(true);
     setStatistics(false);
     setPlanner(false);

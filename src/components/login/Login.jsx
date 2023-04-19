@@ -25,8 +25,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(getAuthentication({ email, password }));
-    navigate("/main");
+    const response = await dispatch(getAuthentication({ email, password }));
+    console.log("response", response);
+    if (response.payload) navigate("/main");
   };
 
   return (
