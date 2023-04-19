@@ -6,12 +6,12 @@ const flexCenterMixin = `
   align-items: center;
 `;
 
-const peach = "rgb(255, 233, 213);";
-const lightOrange = "#FFC846";
+const peach = "rgb(255 227 174);";
+const lightOrange = "#FFB400";
 const orange = "rgb(255, 123, 0);";
 
 export const Container = styled.div`
-  background: ${lightOrange};
+  background: ${peach};
 
   #upper {
     box-sizing: border-box;
