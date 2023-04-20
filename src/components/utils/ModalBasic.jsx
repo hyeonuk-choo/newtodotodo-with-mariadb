@@ -17,6 +17,8 @@ const ModalBasic = ({
   onClickUpdateToggleBtn,
   onClickDelete,
   id,
+  modalButton,
+  setErrorModal,
 }) => {
   const modalRef = useRef();
 
@@ -57,15 +59,23 @@ const ModalBasic = ({
           modalLeft={modalLeft}
         >
           {/* -- 모달제목 텍스트가 있는 경우만 표시 -- */}
-          {modalTitle ? <div id="upper">{modalTitle}</div> : null}
+          {modalTitle ? <div id="upper-title">{modalTitle}</div> : null}
 
           {/* -- 모달내용 텍스트가 있는 경우만 표시 -- */}
           {modalContent ? (
-            <div id="lower">
+            <div id="lower-content">
               {/* -- 이미지가 있을 경우만 표시 -- */}
               {modalImage ? <img src={modalImage} alt="largeTrophy" /> : null}
 
               <div id="modalContent">{modalContent}</div>
+              {modalButton && (
+                <button
+                  className="confirm"
+                  onClick={() => setErrorModal(false)}
+                >
+                  확인
+                </button>
+              )}
             </div>
           ) : null}
 
@@ -122,10 +132,9 @@ const StModalContainer = styled.div`
   position: absolute;
   top: ${(p) => p.modalTop};
   left: ${(p) => p.modalLeft};
-
   z-index: 2;
 
-  #upper {
+  #upper-title {
     width: 100%;
     height: 20%;
     background-color: #ffe9d5;
@@ -138,9 +147,9 @@ const StModalContainer = styled.div`
     font-size: 2.5vh;
   }
 
-  #lower {
+  #lower-content {
     width: 100%;
-    height: 80%;
+    height: ${(p) => (p.modalTitle ? "80%" : "100%")};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -150,12 +159,22 @@ const StModalContainer = styled.div`
       box-sizing: border-box;
       width: 30%;
       height: 100%;
+      flex: 5;
     }
 
     #modalContent {
       width: 77%;
       height: 100%;
       font-size: 2vh;
+      flex: 3;
+    }
+
+    .confirm {
+      border: none;
+      border-bottom-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
+      width: 100%;
+      flex: 2;
     }
   }
 

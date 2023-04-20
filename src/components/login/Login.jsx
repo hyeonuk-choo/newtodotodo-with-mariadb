@@ -14,12 +14,14 @@ import {
   LoginTitle,
 } from "./Login.styles";
 import { getAuthentication } from "../../redux/modules/loginSlice";
+import LoginErrorModal from "./LoginErrorModal";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorModal, setErrorModal] = useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const handleSubmit = async (e) => {
@@ -27,7 +29,11 @@ const Login = () => {
 
     const response = await dispatch(getAuthentication({ email, password }));
     console.log("response", response);
-    if (response.payload) navigate("/main");
+    if (response.payload) {
+      navigate("/main");
+    } else if (response.error) {
+      setErrorModal(true);
+    }
   };
 
   return (
@@ -57,6 +63,7 @@ const Login = () => {
         </Form>
         <Link to="/signup">회원가입</Link>
       </div>
+      {errorModal && <LoginErrorModal setErrorModal={setErrorModal} />}
     </Container>
   );
 };
