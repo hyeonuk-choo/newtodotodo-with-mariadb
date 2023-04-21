@@ -109,6 +109,10 @@ const ModalBasic = ({
 
 export default ModalBasic;
 
+const peach = "rgb(255 227 174);";
+const lightOrange = "#FFB400";
+const orange = "rgb(255, 123, 0);";
+
 const StModalBackground = styled.div`
   width: 100%;
   height: 100%;
@@ -175,6 +179,11 @@ const StModalContainer = styled.div`
       border-bottom-right-radius: 2rem;
       width: 100%;
       flex: 2;
+      font-family: "Gowun Dodum", sans-serif;
+      font-size: 2vh;
+      font-weight: 600;
+      background-color: ${peach};
+      cursor: pointer;
     }
   }
 

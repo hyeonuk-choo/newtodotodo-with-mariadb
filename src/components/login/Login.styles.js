@@ -62,7 +62,6 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
-
 export const Input = styled.input`
   box-sizing: border-box;
   width: 100%;
@@ -74,10 +73,12 @@ export const Input = styled.input`
   border-radius: 0.25rem;
   background-color: rgb(255 242 207);
   font-family: "Gowun Dodum", sans-serif;
+  transition: box-shadow 0.3s ease-in-out;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(255, 182, 96, 0.6),
+      0 0 20px rgba(255, 182, 96, 0.4);
   }
 `;
 
