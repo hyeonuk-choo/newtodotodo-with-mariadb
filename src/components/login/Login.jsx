@@ -31,7 +31,7 @@ const Login = () => {
     console.log("response", response);
     if (response.payload) {
       navigate("/main");
-    } else if (response.error) {
+    } else {
       setErrorModal(true);
     }
   };

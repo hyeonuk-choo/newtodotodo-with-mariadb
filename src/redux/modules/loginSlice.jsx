@@ -69,11 +69,10 @@ export const getAuthentication = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.post(`${BASE_URL}/login`, payload);
-      const { token } = response.data;
-      localStorage.setItem("token", token);
-      return thunkAPI.fulfillWithValue(token);
+      localStorage.setItem("token", response.data.token);
+      return thunkAPI.fulfillWithValue(response.data.token);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );

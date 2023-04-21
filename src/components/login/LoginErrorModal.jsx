@@ -13,7 +13,7 @@ const LoginErrorModal = ({ setErrorModal }) => {
       modalLeft={(100 - 60) / 2 + "%"}
       modalImage={infoSvg}
       modalContent="이메일 또는 비밀번호를 다시 확인해주세요"
-      modalButton="확인"
+      modalButton={true}
       setErrorModal={setErrorModal}
     />
   );
