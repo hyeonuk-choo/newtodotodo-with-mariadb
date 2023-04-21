@@ -1,8 +1,10 @@
 // 라이브러리
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import styled from "styled-components";
 
 // 컴포넌트
 import {
@@ -15,6 +17,7 @@ import {
 } from "./Login.styles";
 import { getAuthentication } from "../../redux/modules/loginSlice";
 import LoginErrorModal from "./LoginErrorModal";
+import PrivacyPolicy from "./PrivacyPolicy";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,6 +25,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorModal, setErrorModal] = useState(false);
+  const [passwordType, setPasswordType] = useState({
+    type: "password",
+    visible: false,
+  });
+
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const handleSubmit = async (e) => {
@@ -34,6 +42,36 @@ const Login = () => {
     } else {
       setErrorModal(true);
     }
+  };
+
+  const handlePasswordType = (e) => {
+    setPasswordType(() => {
+      if (!passwordType.visible) {
+        return { type: "text", visible: true };
+      }
+      return { type: "password", visible: false };
+    });
+  };
+
+  const [iconSize, setIconSize] = useState(window.innerHeight * 0.023);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIconSize(window.innerHeight * 0.023);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // 개인정보처리방침 모달
+  const [privcayModal, setPrivacyModal] = useState(false);
+  const showPrivacyModal = (e) => {
+    e.preventDefault();
+    setPrivacyModal(true);
   };
 
   return (
@@ -53,19 +91,69 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Input
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <StPasswordInput>
+            <Input
+              type={passwordType.type}
+              placeholder="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <StVisible onClick={handlePasswordType}>
+              {passwordType.visible ? (
+                <AiOutlineEye size={iconSize} />
+              ) : (
+                <AiOutlineEyeInvisible size={iconSize} />
+              )}
+            </StVisible>
+          </StPasswordInput>
           <Button type="submit">로그인</Button>
         </Form>
         <Link to="/signup">회원가입</Link>
+        <StPrivacy>
+          회원가입시
+          <StPrivacyText onClick={showPrivacyModal}>
+            개인정보처리방침
+          </StPrivacyText>
+          동의로 간주됩니다
+        </StPrivacy>
       </div>
       {errorModal && <LoginErrorModal setErrorModal={setErrorModal} />}
+      {privcayModal && <PrivacyPolicy setPrivacyModal={setPrivacyModal} />}
     </Container>
   );
 };
 
 export default Login;
+
+const StPasswordInput = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const StVisible = styled.span`
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  cursor: pointer;
+  transform: translateY(-65%);
+`;
+
+const StPrivacy = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 4vh;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  color: #b3b3b3;
+  font-weight: 400;
+  justify-content: center;
+  font-size: 2vh;
+`;
+
+const StPrivacyText = styled.div`
+  color: #f7931e;
+  text-decoration: underline;
+  cursor: pointer;
+`;

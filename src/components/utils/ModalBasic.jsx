@@ -57,6 +57,7 @@ const ModalBasic = ({
           modalWidth={modalWidth}
           modalTop={modalTop}
           modalLeft={modalLeft}
+          modalTitle={modalTitle}
         >
           {/* -- 모달제목 텍스트가 있는 경우만 표시 -- */}
           {modalTitle ? <div id="upper-title">{modalTitle}</div> : null}
@@ -163,7 +164,7 @@ const StModalContainer = styled.div`
       box-sizing: border-box;
       width: 30%;
       height: 100%;
-      flex: 5;
+      flex: ${(p) => (p.modalTitle ? 3 : 5)};
     }
 
     #modalContent {
