@@ -361,6 +361,8 @@ const PlannerMain = () => {
   );
 };
 
+export default PlannerMain;
+
 const StTodo = styled.div`
   display: flex;
   flex-direction: row;
@@ -509,5 +511,3 @@ const StRootDiv = styled.div`
     }
   }
 `;
-
-export default PlannerMain;

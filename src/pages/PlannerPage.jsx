@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PlannerMain from "../components/planner/PlannerMain";
-
 import logoutAlert from "../assets/img/logoutAlert.png";
 
 const PlannerPage = () => {
