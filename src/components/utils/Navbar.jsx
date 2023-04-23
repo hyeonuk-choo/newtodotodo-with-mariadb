@@ -10,52 +10,65 @@ import plannerSvg from "../../assets/img/plannerSvg.svg";
 import clickHomeSvg from "../../assets/img/clickHomeSvg.svg";
 import clickStatisticsSvg from "../../assets/img/clickStatisticsSvg.svg";
 import clickPlannerSvg from "../../assets/img/clickPlannerSvg.svg";
+import clickMyPageSvg from "../../assets/img/clickMypageSvg.svg";
+import mypageSvg from "../../assets/img/mypageSvg.svg";
 
 const Navbar = (props) => {
   const [home, setHome] = useState(props.home);
   const [statistics, setStatistics] = useState(props.statistics);
   const [planner, setPlanner] = useState(props.planner);
+  const [my, setMy] = useState(props.my);
   const navigate = useNavigate();
 
-  const onClickHomeMenu = async () => {
+  const onClickHome = async () => {
     navigate("/main");
     setHome(true);
     setStatistics(false);
     setPlanner(false);
   };
-  const onClickStatisticsMenu = async () => {
+  const onClickStatistics = async () => {
     navigate("/statistics");
     setHome(false);
     setStatistics(true);
     setPlanner(false);
   };
 
-  const onClickPlannerMenu = async () => {
+  const onClickPlanner = async () => {
     navigate("/planner-main");
     setHome(false);
     setStatistics(false);
     setPlanner(true);
   };
 
+  const onClickMy = async () => {
+    navigate("/my");
+    setHome(false);
+    setStatistics(false);
+    setPlanner(false);
+    setMy(true);
+  };
+
   return (
     <StNav>
       {home ? (
-        <StHome src={clickHomeSvg} onClick={onClickHomeMenu} />
+        <StHome src={clickHomeSvg} onClick={onClickHome} />
       ) : (
-        <StHome src={homeSvg} onClick={onClickHomeMenu} />
+        <StHome src={homeSvg} onClick={onClickHome} />
       )}
       {statistics ? (
-        <StStatistics
-          src={clickStatisticsSvg}
-          onClick={onClickStatisticsMenu}
-        />
+        <StStatistics src={clickStatisticsSvg} onClick={onClickStatistics} />
       ) : (
-        <StStatistics src={statisticsSvg} onClick={onClickStatisticsMenu} />
+        <StStatistics src={statisticsSvg} onClick={onClickStatistics} />
       )}
       {planner ? (
-        <StPlanner src={clickPlannerSvg} onClick={onClickPlannerMenu} />
+        <StPlanner src={clickPlannerSvg} onClick={onClickPlanner} />
       ) : (
-        <StPlanner src={plannerSvg} onClick={onClickPlannerMenu} />
+        <StPlanner src={plannerSvg} onClick={onClickPlanner} />
+      )}
+      {my ? (
+        <StPlanner src={clickMyPageSvg} onClick={onClickMy} />
+      ) : (
+        <StPlanner src={mypageSvg} onClick={onClickMy} />
       )}
     </StNav>
   );

@@ -1,92 +1,114 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Profile from "../components/my/Profile";
-import ProfileTabs from "../components/my/ProfileTabs";
-import Navbar from "../components/utils/Navbar";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { __reset } from "../redux/modules/mainSlice";
-import Layout from "../components/utils/Layout";
-import UploadPhoto from "../components/my/UploadPhoto";
+import logoutAlert from "../assets/img/logoutAlert.png";
+import My from "../components/my/My";
 
 const MyPage = () => {
-  const dispatch = useDispatch();
+  // 토큰 만료되면 로그아웃
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const [loginOn, setLoginOn] = useState(true);
 
   useEffect(() => {
-    dispatch(__reset());
-  }, []);
-
+    if (!token) {
+      setLoginOn(false);
+    }
+  }, [loginOn]);
   return (
-    <StContainer>
-      <Profile />
-      {/* <ProfileTabs /> */}
-      <Navbar myPage={true} />
-    </StContainer>
+    <>
+      {loginOn ? (
+        ""
+      ) : (
+        <StNeedLogin>
+          <StNeedLoginModal>
+            <StLoginModalTop>자동 로그아웃 안내</StLoginModalTop>
+            <StLoginModalImg>
+              <StLogoutAlert src={logoutAlert} alt="로그인 필요" />
+            </StLoginModalImg>
+            <StLoginModaltxt>
+              로그인 후 1시간이 경과되어
+              <br />
+              자동 로그아웃 되었습니다
+            </StLoginModaltxt>
+            <StNeedLoginBtn
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              다시 로그인 하기
+            </StNeedLoginBtn>
+          </StNeedLoginModal>
+        </StNeedLogin>
+      )}
+      <My />
+    </>
   );
 };
 
-const StContainer = styled.div`
-  width:100%;
-  height:100%;
-  display: flex;
-  flex-direction:column;
-  justify-content:space-between;
-  background-color: #fafafa;
-  justify-content:center;
-  box-sizing:border-box;
-  /* overflow:hidden; */
-
-
-  @media screen and (min-width: 768px) {
-    width:600px;
-  }
-
-  /* @media screen and (min-height: 667px) {
-  height:667px;
-  }
-  @media screen and (min-height: 736px) {
-  height:736px;
-  }
-
-  @media screen and (min-height: 740px) {
-  height:740px;
-  }
-
-  @media screen and (min-height: 800px) {
-  height:800px;
-  }
-
-  @media screen and (min-height: 812px) {
-  height:812px;
-  }
-
-  @media screen and (min-height: 844px) {
-  height:844px;
-  }
-
-  @media screen and (min-height: 851px) {
-  height:851px;
-  }
-
-@media screen and (min-height: 896px) {
-  height:896px;
-  }
-
-  @media screen and (min-height: 915px) {
-  height:915px;
-  }
-
-  @media screen and (min-height: 1024px) {
-  height:1024px;
-  }
-
-  @media screen and (min-height: 1180px) {
-  height:1180px;
-  }
-
-  @media screen and (min-height: 1366px) {
-  height:1366px;
-  } */
-`
-
 export default MyPage;
+
+const StNeedLogin = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(87, 87, 87, 0.3);
+  z-index: 99999;
+`;
+
+const StNeedLoginBtn = styled.button`
+  background: #ffffff;
+  padding: 10px 0px;
+  color: #f7931e;
+  border-radius: 9px;
+  margin-top: 17px;
+  width: 85%;
+  border: 1px solid #f7931e;
+  border-radius: 12px;
+  cursor: pointer;
+`;
+
+const StNeedLoginModal = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  height: 240px;
+  z-index: 99999;
+  box-shadow: 0px 14px 24px -4px rgba(117, 146, 189, 0.32),
+    inset 0px 8px 14px rgba(255, 255, 255, 0.3);
+  border-radius: 21px;
+  width: 80%;
+  text-align: center;
+`;
+
+const StLoginModalTop = styled.div`
+  width: 100%;
+  height: 44px;
+  background: #f7931e;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 16px 16px 0px 0px;
+  color: #ffffff;
+  line-height: 44px;
+`;
+
+const StLoginModalImg = styled.div`
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+`;
+
+const StLogoutAlert = styled.img`
+  width: 63px;
+`;
+
+const StLoginModaltxt = styled.div`
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+`;
