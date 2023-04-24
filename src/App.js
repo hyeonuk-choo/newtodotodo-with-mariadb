@@ -32,6 +32,6 @@ const StContainer = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    left: 50%;
+    left: 55%;
   }
 `;

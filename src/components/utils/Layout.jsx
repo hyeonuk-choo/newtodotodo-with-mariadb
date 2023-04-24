@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
 };
 
 const StLayout = styled.div`
-  width: 60vh;
+  width: 45%;
   height: 100vh;
   background-color: #fafafa;
   position: relative;
