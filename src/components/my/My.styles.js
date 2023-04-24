@@ -129,7 +129,7 @@ export const StBody = styled.div`
   .imgBox {
     background-color: transparent;
     width: 30%;
-    height: 20%;
+    height: 23%;
     cursor: pointer;
     border-radius: 10%;
     position: relative;
@@ -150,14 +150,31 @@ export const StBody = styled.div`
 
   .edit-profile {
     margin: 5%;
+    width: 45%;
   }
   .edit-profile .row {
     margin-bottom: 1rem;
   }
-
   textarea {
-    width: 110%;
-    height: 20vh;
+    width: 100%;
+    height: 17vh;
+  }
+
+  button {
+    font-family: "Gowun Dodum", sans-serif;
+    font-size: 1.7vh;
+    cursor: pointer;
+
+    width: 10vh;
+    height: 5vh;
+    color: white;
+
+    background: #ff8f27;
+    border: 1px solid #ff8f27;
+    border-radius: 44px;
+    span {
+      color: white;
+    }
   }
 `;
 

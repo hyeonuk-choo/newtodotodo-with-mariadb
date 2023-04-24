@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { StTodo, StBody, StRootDiv } from "./My.styles";
@@ -8,10 +9,12 @@ import { getUserInfo } from "../../redux/modules/mainSlice";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
 
+// My.jsx
 const My = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const token = localStorage.getItem("token");
-  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.main); // mainSlice
 
   useEffect(() => {
@@ -57,7 +60,15 @@ const My = () => {
       {/* ------------ 헤더 -------------*/}
       <div className="header">
         <span>{userInfo?.username}님의 마이페이지</span>
-        <button className="actionButton logoutButton">Logout</button>
+        <button
+          className="actionButton logoutButton"
+          onClick={() => {
+            localStorage.removeItem("token");
+            navigate("/");
+          }}
+        >
+          Logout
+        </button>
       </div>
 
       {/* -------- 바디부분 시작 ---------*/}
@@ -70,23 +81,19 @@ const My = () => {
           id="imageUpload"
         />
         {imagePreview ? (
-          <div className="imgBox">
-            <img
-              className="picture"
-              src={imagePreview}
-              alt="preview"
-              onClick={() => document.getElementById("imageUpload").click()}
-            />
+          <div
+            className="imgBox"
+            onClick={() => document.getElementById("imageUpload").click()}
+          >
+            <img className="picture" src={imagePreview} alt="preview" />
             <img className="camera" src={cameraSvg} alt="cameraSvg" />
           </div>
         ) : (
-          <div className="imgBox">
-            <img
-              className="picture"
-              src={profileImgSvg}
-              alt="defaultimg"
-              onClick={() => document.getElementById("imageUpload").click()}
-            />
+          <div
+            className="imgBox"
+            onClick={() => document.getElementById("imageUpload").click()}
+          >
+            <img className="picture" src={profileImgSvg} alt="defaultimg" />
             <img className="camera" src={cameraSvg} alt="cameraSvg" />
           </div>
         )}
@@ -107,7 +114,7 @@ const My = () => {
                 />
               </div>
               <div className="row">
-                <label htmlFor="username">학교이름: </label>
+                <label htmlFor="username">학교 이름: </label>
                 <input
                   type="text"
                   id="username"
@@ -118,7 +125,7 @@ const My = () => {
                 />
               </div>
               <div className="row">
-                <label htmlFor="grade">학년: </label>
+                <label htmlFor="grade">학년 입력: </label>
                 <select
                   id="grade"
                   name="grade"
@@ -149,10 +156,10 @@ const My = () => {
             <>
               <div className="row">이번달 순위: {userInfo?.monthRank}</div>
               <div className="row">E-mail: {userInfo?.email}</div>
-              <div className="row">유저이름: {userInfo?.username}</div>
-              <div className="row">학교이름: {userInfo?.highschool}</div>
+              <div className="row">유저 이름: {userInfo?.username}</div>
+              <div className="row">학교 이름: {userInfo?.highschool}</div>
               <div className="row">학년: {userInfo?.grade}</div>
-              <div className="row">내 소개: </div>
+              <div className="row">자기소개: </div>
               <button onClick={() => setEditMode(true)}>수정하기</button>
             </>
           )}
