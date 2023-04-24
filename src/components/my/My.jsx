@@ -6,6 +6,7 @@ import { StTodo, StBody, StRootDiv } from "./My.styles";
 import Navbar from "../utils/Navbar";
 import { getUserInfo } from "../../redux/modules/mainSlice";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
+import cameraSvg from "../../assets/img/cameraSvg.svg";
 
 const My = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -46,7 +47,10 @@ const My = () => {
     console.log("School:", school);
     console.log("Username:", username);
     // 여기서 API 호출 등으로 서버에 변경 사항을 저장하세요.
+    setEditMode(false);
   };
+
+  const [editMode, setEditMode] = useState(false);
 
   return (
     <StRootDiv>
@@ -66,44 +70,92 @@ const My = () => {
           id="imageUpload"
         />
         {imagePreview ? (
-          <img
-            src={imagePreview}
-            alt="preview"
-            onClick={() => document.getElementById("imageUpload").click()}
-          />
+          <div className="imgBox">
+            <img
+              className="picture"
+              src={imagePreview}
+              alt="preview"
+              onClick={() => document.getElementById("imageUpload").click()}
+            />
+            <img className="camera" src={cameraSvg} alt="cameraSvg" />
+          </div>
         ) : (
-          <img
-            src={profileImgSvg}
-            alt="defaultimg"
-            onClick={() => document.getElementById("imageUpload").click()}
-          />
+          <div className="imgBox">
+            <img
+              className="picture"
+              src={profileImgSvg}
+              alt="defaultimg"
+              onClick={() => document.getElementById("imageUpload").click()}
+            />
+            <img className="camera" src={cameraSvg} alt="cameraSvg" />
+          </div>
         )}
         <div className="edit-profile">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="school">학교 이름:</label>
-              <input
-                type="text"
-                id="school"
-                name="school"
-                value={school}
-                onChange={handleSchoolChange}
-                placeholder="학교 이름을 입력하세요"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="username">유저 이름:</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={username}
-                onChange={handleUsernameChange}
-                placeholder="유저 이름을 입력하세요"
-              />
-            </div>
-            <button type="submit">저장</button>
-          </form>
+          {editMode ? (
+            <form onSubmit={handleSubmit}>
+              <div className="row">이번달 순위: {userInfo?.monthRank}</div>
+              <div className="row">E-mail: {userInfo?.email}</div>
+              <div className="row">
+                <label htmlFor="school">유저 이름: </label>
+                <input
+                  type="text"
+                  id="school"
+                  name="school"
+                  value={school}
+                  onChange={handleSchoolChange}
+                  placeholder="누구신지?"
+                />
+              </div>
+              <div className="row">
+                <label htmlFor="username">학교이름: </label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  placeholder="어디 학교 다니나요?"
+                />
+              </div>
+              <div className="row">
+                <label htmlFor="grade">학년: </label>
+                <select
+                  id="grade"
+                  name="grade"
+                  value={username}
+                  onChange={handleUsernameChange}
+                >
+                  <option value="">학년을 선택하세요</option>
+                  <option value="1">1학년</option>
+                  <option value="2">2학년</option>
+                  <option value="3">3학년</option>
+                </select>
+              </div>
+              <div className="row">
+                <label htmlFor="username">자기소개: </label>
+                <textarea
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  placeholder="자기소개를 자세히 해보세요"
+                />
+              </div>
+
+              <button type="submit">저장</button>
+            </form>
+          ) : (
+            <>
+              <div className="row">이번달 순위: {userInfo?.monthRank}</div>
+              <div className="row">E-mail: {userInfo?.email}</div>
+              <div className="row">유저이름: {userInfo?.username}</div>
+              <div className="row">학교이름: {userInfo?.highschool}</div>
+              <div className="row">학년: {userInfo?.grade}</div>
+              <div className="row">내 소개: </div>
+              <button onClick={() => setEditMode(true)}>수정하기</button>
+            </>
+          )}
         </div>
       </StBody>
       {/* --------- 바디부분 끝 ----------*/}

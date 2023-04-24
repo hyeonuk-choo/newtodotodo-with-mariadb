@@ -126,12 +126,38 @@ export const StBody = styled.div`
   flex-direction: column;
   align-items: center;
 
-  img {
+  .imgBox {
     background-color: transparent;
     width: 30%;
     height: 20%;
     cursor: pointer;
     border-radius: 10%;
+    position: relative;
+
+    img.picture {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    .camera {
+      position: absolute;
+      width: 19%;
+      right: 1%;
+      bottom: 3%;
+    }
+  }
+
+  .edit-profile {
+    margin: 5%;
+  }
+  .edit-profile .row {
+    margin-bottom: 1rem;
+  }
+
+  textarea {
+    width: 110%;
+    height: 20vh;
   }
 `;
 
