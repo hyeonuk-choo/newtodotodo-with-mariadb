@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // 컴포넌트
@@ -26,10 +26,10 @@ const Signup = () => {
   const [emailMsg, setEmailMsg] = useState("");
   const [usernameMsg, setUsernameMsg] = useState("");
   const [passwordMsg, setPasswordMsg] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(false);
   const [usernameValid, setUsernameValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -130,42 +130,42 @@ const Signup = () => {
     }
   };
 
-  const handlePasswordCheck = (password) => {
-    const regex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
+  // 비밀번호 Validation
+  const validatePassword = (password) => {
+    const regex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{6,}$/;
 
     if (!regex.test(password)) {
-      setPasswordMsg("비밀번호는 8자 이상, 영문/숫자/특수문자 포함.");
-      setPasswordMatch(false);
+      setPasswordMsg("비밀번호는 6자 이상, 영문/숫자/특수문자 포함.");
       setPasswordValid(false);
-      return;
-    } else if (passwordConfirm === password) {
+    } else {
+      setPasswordValid(true);
+    }
+  };
+
+  const checkPasswordMatch = () => {
+    if (password === passwordConfirm) {
       setPasswordMsg("비밀번호가 일치합니다");
       setPasswordMatch(true);
-      setPasswordValid(true);
     } else {
       setPasswordMsg("비밀번호가 일치하지 않습니다");
       setPasswordMatch(false);
-      setPasswordValid(false);
     }
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    handlePasswordCheck(e.target.value);
+    validatePassword(e.target.value);
   };
 
   const handlePasswordConfirmChange = (e) => {
     setPasswordConfirm(e.target.value);
-    setPasswordValid(false);
-    setPasswordMatch(e.target.value === password);
-    if (e.target.value === password) {
-      setPasswordMsg("비밀번호가 일치합니다");
-      setPasswordValid(true);
-    } else {
-      setPasswordMsg("비밀번호가 일치하지 않습니다");
-    }
   };
 
+  useEffect(() => {
+    checkPasswordMatch();
+  }, [password, passwordConfirm]);
+
+  // 회원가입 버튼 기능
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!usernameValid) {
@@ -177,7 +177,6 @@ const Signup = () => {
       return;
     }
     if (!passwordValid) {
-      console.log(passwordValid);
       setPasswordMsg("비밀번호 유효성 검사를 통과해야 합니다.");
       return;
     }
@@ -187,13 +186,13 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/sign-up`, {
-        username,
-        email,
-        password,
-      });
+      // const response = await axios.post(`${BASE_URL}/sign-up`, {
+      //   username,
+      //   email,
+      //   password,
+      // });
 
-      console.log("Signup successful:", response.data);
+      // console.log("Signup successful:", response.data);
       setSuccessMsg("회원가입이 완료되었습니다.");
     } catch (error) {
       console.error("Signup failed:", error);
@@ -266,7 +265,7 @@ const Signup = () => {
             />
           </InputContainer>
 
-          <PasswordMessage passwordMatch={passwordMatch}>
+          <PasswordMessage passwordMsg={passwordMsg}>
             {passwordMsg}
           </PasswordMessage>
 

@@ -139,7 +139,15 @@ export const PasswordMessage = styled.div`
   box-sizing: border-box;
   padding-bottom: 1vh;
 
-  color: ${(props) => (props.passwordMatch ? "rgb(0, 172, 193)" : "red")};
+  color: ${(props) => {
+    if (props.passwordMsg === "비밀번호가 일치합니다") {
+      // console.log(props.passwordMsg);
+      return "rgb(0, 172, 193)";
+    } else {
+      return "red";
+    }
+  }};
+
   font-size: 1.3vh;
   font-weight: bold;
   text-align: right;
