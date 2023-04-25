@@ -186,13 +186,13 @@ const Signup = () => {
     }
 
     try {
-      // const response = await axios.post(`${BASE_URL}/sign-up`, {
-      //   username,
-      //   email,
-      //   password,
-      // });
+      const response = await axios.post(`${BASE_URL}/sign-up`, {
+        username,
+        email,
+        password,
+      });
 
-      // console.log("Signup successful:", response.data);
+      console.log("Signup successful:", response.data);
       setSuccessMsg("회원가입이 완료되었습니다.");
     } catch (error) {
       console.error("Signup failed:", error);
