@@ -19,6 +19,7 @@ const ModalBasic = ({
   id,
   modalButton,
   setErrorModal,
+  onClose,
 }) => {
   const modalRef = useRef();
 
@@ -31,6 +32,7 @@ const ModalBasic = ({
         if (setModalWindow) setModalWindow(false);
         if (setScoreExplain) setScoreExplain(false);
         if (setGraphExplain) setGraphExplain(false);
+        if (onClose) onClose();
       }
     };
 
@@ -72,7 +74,13 @@ const ModalBasic = ({
               {modalButton && (
                 <button
                   className="confirm"
-                  onClick={() => setErrorModal(false)}
+                  onClick={() => {
+                    if (handleCloseModal) handleCloseModal();
+                    if (setModalWindow) setModalWindow(false);
+                    if (setScoreExplain) setScoreExplain(false);
+                    if (setGraphExplain) setGraphExplain(false);
+                    if (onClose) onClose();
+                  }}
                 >
                   확인
                 </button>
@@ -162,7 +170,8 @@ const StModalContainer = styled.div`
 
     img {
       box-sizing: border-box;
-      width: 30%;
+      padding: 6%;
+      width: 64%;
       height: 100%;
       flex: ${(p) => (p.modalTitle ? 3 : 5)};
     }

@@ -1,6 +1,6 @@
 // 라이브러리
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 // 컴포넌트
 import {
@@ -30,8 +30,8 @@ const Signup = () => {
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(false);
-  const [successMsg, setSuccessMsg] = useState("");
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const navigate = useNavigate();
 
   const onClickUsernameCheck = async (e) => {
     e.preventDefault();
@@ -186,14 +186,15 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/sign-up`, {
+      const result = await axios.post(`${BASE_URL}/sign-up`, {
         username,
         email,
         password,
       });
 
-      console.log("Signup successful:", response.data);
-      setSuccessMsg("회원가입이 완료되었습니다.");
+      if (result) {
+        navigate("/", { state: { showSuccessModal: true } });
+      }
     } catch (error) {
       console.error("Signup failed:", error);
     }
@@ -272,7 +273,6 @@ const Signup = () => {
           <Button type="submit">회원가입</Button>
         </Form>
         <Link to="/">로그인</Link>
-        <SuccessMsg>{successMsg}</SuccessMsg>
       </div>
     </Container>
   );

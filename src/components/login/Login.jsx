@@ -1,7 +1,7 @@
 // 라이브러리
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import styled from "styled-components";
@@ -18,10 +18,10 @@ import {
 import { getAuthentication } from "../../redux/modules/loginSlice";
 import LoginErrorModal from "./LoginErrorModal";
 import PrivacyPolicy from "./PrivacyPolicy";
+import SignupSuccessModal from "./SignupSuccessModal";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorModal, setErrorModal] = useState(false);
@@ -29,6 +29,15 @@ const Login = () => {
     type: "password",
     visible: false,
   });
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  useEffect(() => {
+    if (location.state && location.state.showSuccessModal) {
+      setShowSuccessModal(true);
+    }
+  }, [location]);
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -119,6 +128,9 @@ const Login = () => {
       </div>
       {errorModal && <LoginErrorModal setErrorModal={setErrorModal} />}
       {privcayModal && <PrivacyPolicy setPrivacyModal={setPrivacyModal} />}
+      {showSuccessModal && (
+        <SignupSuccessModal onClose={() => setShowSuccessModal(false)} />
+      )}
     </Container>
   );
 };
