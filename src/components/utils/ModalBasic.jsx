@@ -79,6 +79,7 @@ const ModalBasic = ({
                     if (setModalWindow) setModalWindow(false);
                     if (setScoreExplain) setScoreExplain(false);
                     if (setGraphExplain) setGraphExplain(false);
+                    if (setErrorModal) setErrorModal(false);
                     if (onClose) onClose();
                   }}
                 >
