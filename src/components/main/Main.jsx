@@ -81,7 +81,7 @@ const Main = () => {
               이번달 플래너 달성률
               <div>
                 {/* reload시 View에 NaN을 0으로 대체 */}
-                {totalRate}%
+                {isNaN(totalRate) ? 0 : totalRate} %
               </div>
             </div>
 
@@ -98,7 +98,7 @@ const Main = () => {
               플래너 총 달성률
               <div>
                 {/* reload시 View에 NaN을 0으로 대체 */}
-                {totalRate}%
+                {isNaN(totalRate) ? 0 : totalRate} %
               </div>
             </div>
 
