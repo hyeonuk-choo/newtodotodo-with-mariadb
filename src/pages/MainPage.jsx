@@ -1,18 +1,33 @@
+// 라이브러리
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import jwt_decode from "jwt-decode";
+// 컴포넌트 or 이미지
 import Main from "../components/main/Main";
-
 import logoutAlert from "../assets/img/logoutAlert.png";
 
 const MainPage = () => {
   // 토큰 만료되면 로그아웃
-  const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const [loginOn, setLoginOn] = useState(true);
 
+  function isTokenExpired(token) {
+    try {
+      const decoded = jwt_decode(token);
+      if (decoded.exp < Date.now() / 1000) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
   useEffect(() => {
-    if (!token) {
+    if (!token || isTokenExpired(token)) {
       setLoginOn(false);
     }
   }, [loginOn]);
