@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { StTodo, StBody, StRootDiv } from "./My.styles";
 import Navbar from "../utils/Navbar";
-import { getUserInfo } from "../../redux/modules/mainSlice";
+import { editProfile, getUserInfo } from "../../redux/modules/mainSlice";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
 
@@ -23,7 +23,7 @@ const My = () => {
 
   const [imagePreview, setImagePreview] = useState(null);
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -31,29 +31,50 @@ const My = () => {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
+
+      // // 서버에 이미지 업로드 API통신
+      // const formData = new FormData();
+      // formData.append("profileImage", file);
+      // formData.append("userId", userInfo.id); // 필요한 경우 사용자 ID를 추가합니다.
+
+      // try {
+      //   await axios.post(`${BASE_URL}/upload`, formData, {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       Authorization: `Bearer ${token}`, // JWT 토큰이 필요한 경우 헤더에 추가합니다.
+      //     },
+      //   });
+      //   console.log("이미지 업로드 성공");
+      //   // 서버에서 사용자 정보를 다시 가져옵니다.
+      //   dispatch(getUserInfo(token));
+      // } catch (error) {
+      //   console.log("이미지 업로드 실패", error);
+      // }
     }
   };
 
-  const [school, setSchool] = useState("");
-  const [username, setUsername] = useState("");
-
-  const handleSchoolChange = (e) => {
-    setSchool(e.target.value);
-  };
+  const [userProfile, setUserProfile] = useState({
+    username: userInfo?.username,
+    school: userInfo?.school,
+    grade: userInfo?.grade,
+    myMotto: userInfo?.myMotto,
+  });
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    const { name, value } = e.target;
+    setUserProfile((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  console.log("함수 빠져나온 후", userProfile);
+  const [editMode, setEditMode] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("School:", school);
-    console.log("Username:", username);
-    // 여기서 API 호출 등으로 서버에 변경 사항을 저장하세요.
+    // 여기서 API 호출 등으로 서버에 변경 사항을 저장.
+    dispatch(editProfile(userProfile));
+
     setEditMode(false);
   };
-
-  const [editMode, setEditMode] = useState(false);
 
   return (
     <StRootDiv>
@@ -80,46 +101,41 @@ const My = () => {
           style={{ display: "none" }}
           id="imageUpload"
         />
-        {imagePreview ? (
-          <div
-            className="imgBox"
-            onClick={() => document.getElementById("imageUpload").click()}
-          >
-            <img className="picture" src={imagePreview} alt="preview" />
-            <img className="camera" src={cameraSvg} alt="cameraSvg" />
-          </div>
-        ) : (
-          <div
-            className="imgBox"
-            onClick={() => document.getElementById("imageUpload").click()}
-          >
-            <img className="picture" src={profileImgSvg} alt="defaultimg" />
-            <img className="camera" src={cameraSvg} alt="cameraSvg" />
-          </div>
-        )}
+        <div
+          className="imgBox"
+          onClick={() => document.getElementById("imageUpload").click()}
+        >
+          <img
+            className="picture"
+            src={imagePreview || profileImgSvg}
+            alt="profile"
+          />
+          <img className="camera" src={cameraSvg} alt="cameraSvg" />
+        </div>
+
         <div className="edit-profile">
           {editMode ? (
             <form onSubmit={handleSubmit}>
               <div className="row">이번달 순위: {userInfo?.monthRank}</div>
               <div className="row">E-mail: {userInfo?.email}</div>
               <div className="row">
-                <label htmlFor="school">유저 이름: </label>
-                <input
-                  type="text"
-                  id="school"
-                  name="school"
-                  value={school}
-                  onChange={handleSchoolChange}
-                  placeholder="누구신지?"
-                />
-              </div>
-              <div className="row">
-                <label htmlFor="username">학교 이름: </label>
+                <label htmlFor="username">유저 이름: </label>
                 <input
                   type="text"
                   id="username"
                   name="username"
-                  value={username}
+                  value={userProfile?.username}
+                  onChange={handleUsernameChange}
+                  placeholder="누구신지?"
+                />
+              </div>
+              <div className="row">
+                <label htmlFor="school">학교 이름: </label>
+                <input
+                  type="text"
+                  id="school"
+                  name="school"
+                  value={userProfile?.school}
                   onChange={handleUsernameChange}
                   placeholder="어디 학교 다니나요?"
                 />
@@ -129,22 +145,22 @@ const My = () => {
                 <select
                   id="grade"
                   name="grade"
-                  value={username}
+                  value={userProfile?.grade}
                   onChange={handleUsernameChange}
                 >
                   <option value="">학년을 선택하세요</option>
-                  <option value="1">1학년</option>
-                  <option value="2">2학년</option>
-                  <option value="3">3학년</option>
+                  <option value="1학년">1학년</option>
+                  <option value="2학년">2학년</option>
+                  <option value="3학년">3학년</option>
                 </select>
               </div>
               <div className="row">
-                <label htmlFor="username">자기소개: </label>
+                <label htmlFor="myMotto">자기소개: </label>
                 <textarea
                   type="text"
-                  id="username"
-                  name="username"
-                  value={username}
+                  id="myMotto"
+                  name="myMotto"
+                  value={userProfile?.myMotto}
                   onChange={handleUsernameChange}
                   placeholder="자기소개를 자세히 해보세요"
                 />
@@ -157,9 +173,9 @@ const My = () => {
               <div className="row">이번달 순위: {userInfo?.monthRank}</div>
               <div className="row">E-mail: {userInfo?.email}</div>
               <div className="row">유저 이름: {userInfo?.username}</div>
-              <div className="row">학교 이름: {userInfo?.highschool}</div>
+              <div className="row">학교 이름: {userInfo?.school}</div>
               <div className="row">학년: {userInfo?.grade}</div>
-              <div className="row">자기소개: </div>
+              <div className="row">자기소개: {userInfo?.myMotto}</div>
               <button onClick={() => setEditMode(true)}>수정하기</button>
             </>
           )}
