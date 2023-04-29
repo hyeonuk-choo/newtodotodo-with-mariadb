@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { StTodo, StBody, StRootDiv } from "./My.styles";
 import Navbar from "../utils/Navbar";
-import { editProfile, getUserInfo } from "../../redux/modules/mainSlice";
+import { getUserInfo } from "../../redux/modules/mainSlice";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
 
@@ -71,9 +71,18 @@ const My = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 여기서 API 호출 등으로 서버에 변경 사항을 저장.
-    dispatch(editProfile(userProfile));
+    try {
+      await axios.put(`${BASE_URL}/edit-profile`, userProfile, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    setEditMode(false);
+      setEditMode(false);
+      dispatch(getUserInfo(token));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -170,7 +179,7 @@ const My = () => {
             </form>
           ) : (
             <>
-              <div className="row">이번달 순위: {user?.monthRank}</div>
+              <div className="row">이번달 순위: {user?.totalRank}</div>
               <div className="row">E-mail: {user?.email}</div>
               <div className="row">유저 이름: {user?.username}</div>
               <div className="row">학교 이름: {user?.school}</div>

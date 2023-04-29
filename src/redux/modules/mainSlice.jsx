@@ -25,26 +25,9 @@ export const getUserInfo = createAsyncThunk(
           Authorization: `Bearer ${payload}`,
         },
       });
-      console.log("getUserInfo api", data.data);
+      console.log("getUserInfo api", data);
 
       return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-export const editProfile = createAsyncThunk(
-  "mainSlice/editProfile",
-  async (payload, thunkAPI) => {
-    try {
-      const response = await axios.put(`${BASE_URL}/edit-profile`, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(response.data[0]);
-      return thunkAPI.fulfillWithValue(response.data[0]);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -65,18 +48,6 @@ const mainSlice = createSlice({
         state.userInfo = action.payload;
       })
       .addCase(getUserInfo.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload.message;
-      })
-      .addCase(editProfile.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(editProfile.fulfilled, (state, action) => {
-        state.isLoading = false;
-        console.log("editProfile action.payload", action.payload);
-        state.userInfo = action.payload;
-      })
-      .addCase(editProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload.message;
       });
