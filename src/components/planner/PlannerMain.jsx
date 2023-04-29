@@ -18,7 +18,7 @@ const PlannerMain = () => {
   const uniqueId = uuidv4();
   const [todos, setTodos] = useState([]);
   const [modalId, setModalId] = useState(null);
-  const { userInfo } = useSelector((state) => state.main); // mainSlice
+  const { total_rows, user } = useSelector((state) => state.main?.userInfo); // mainSlice
   const token = localStorage.getItem("token");
 
   // 클릭한 DOM요소의 id를 state값으로 가져오기
@@ -97,7 +97,7 @@ const PlannerMain = () => {
     setTodos([
       {
         id: uniqueId,
-        user_id: userInfo.id,
+        user_id: user.id,
         title: "",
         content: "",
         updateMode: false,
@@ -128,7 +128,7 @@ const PlannerMain = () => {
 
   useEffect(() => {
     getTodos();
-  }, [userInfo]);
+  }, [user]);
 
   // 투두 수정하기 토글버튼
   const onClickUpdateToggleBtn = (id) => {
@@ -219,7 +219,7 @@ const PlannerMain = () => {
     <StRootDiv>
       {/* ------------ 투두 헤더 -------------*/}
       <div className="header">
-        <span>{userInfo?.username}님의 플래너</span>
+        <span>{user?.username}님의 플래너</span>
       </div>
 
       {/* -------- 투두 바디부분 시작 ---------*/}

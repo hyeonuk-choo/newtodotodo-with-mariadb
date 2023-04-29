@@ -15,7 +15,7 @@ const My = () => {
   const dispatch = useDispatch();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const token = localStorage.getItem("token");
-  const { userInfo } = useSelector((state) => state.main); // mainSlice
+  const { total_rows, user } = useSelector((s) => s.main.userInfo); // mainSlice
 
   useEffect(() => {
     dispatch(getUserInfo(token));
@@ -54,10 +54,10 @@ const My = () => {
   };
 
   const [userProfile, setUserProfile] = useState({
-    username: userInfo?.username,
-    school: userInfo?.school,
-    grade: userInfo?.grade,
-    myMotto: userInfo?.myMotto,
+    username: user?.username,
+    school: user?.school,
+    grade: user?.grade,
+    myMotto: user?.myMotto,
   });
 
   const handleUsernameChange = (e) => {
@@ -80,7 +80,7 @@ const My = () => {
     <StRootDiv>
       {/* ------------ 헤더 -------------*/}
       <div className="header">
-        <span>{userInfo?.username}님의 마이페이지</span>
+        <span>{user?.username}님의 마이페이지</span>
         <button
           className="actionButton logoutButton"
           onClick={() => {
@@ -116,8 +116,8 @@ const My = () => {
         <div className="edit-profile">
           {editMode ? (
             <form onSubmit={handleSubmit}>
-              <div className="row">이번달 순위: {userInfo?.monthRank}</div>
-              <div className="row">E-mail: {userInfo?.email}</div>
+              <div className="row">이번달 순위: {user?.monthRank}</div>
+              <div className="row">E-mail: {user?.email}</div>
               <div className="row">
                 <label htmlFor="username">유저 이름: </label>
                 <input
@@ -170,12 +170,12 @@ const My = () => {
             </form>
           ) : (
             <>
-              <div className="row">이번달 순위: {userInfo?.monthRank}</div>
-              <div className="row">E-mail: {userInfo?.email}</div>
-              <div className="row">유저 이름: {userInfo?.username}</div>
-              <div className="row">학교 이름: {userInfo?.school}</div>
-              <div className="row">학년: {userInfo?.grade}</div>
-              <div className="row">자기소개: {userInfo?.myMotto}</div>
+              <div className="row">이번달 순위: {user?.monthRank}</div>
+              <div className="row">E-mail: {user?.email}</div>
+              <div className="row">유저 이름: {user?.username}</div>
+              <div className="row">학교 이름: {user?.school}</div>
+              <div className="row">학년: {user?.grade}</div>
+              <div className="row">자기소개: {user?.myMotto}</div>
               <button onClick={() => setEditMode(true)}>수정하기</button>
             </>
           )}

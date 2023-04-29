@@ -17,7 +17,7 @@ import Dday from "./Dday";
 import { getUserInfo } from "../../redux/modules/mainSlice";
 
 const Main = () => {
-  const { userInfo } = useSelector((s) => s.main); // mainSlice
+  const { total_rows, user } = useSelector((s) => s.main.userInfo); // mainSlice
   const [toggleValue, setToggleValue] = useState(true);
   const [modalWindow, setModalWindow] = useState(false);
   const dispatch = useDispatch();
@@ -37,14 +37,14 @@ const Main = () => {
     setToggleValue(false);
   };
 
-  console.log("userInfo", userInfo);
+  console.log("user", user);
 
-  const completeRate = userInfo
-    ? Math.round((userInfo.completeCnt / userInfo.totalCnt) * 100)
+  const completeRate = user
+    ? Math.round((user.completeCnt / user.totalCnt) * 100)
     : 0;
 
-  const totalRate = userInfo
-    ? Math.round((userInfo.completeCnt / userInfo.totalCnt) * 100)
+  const totalRate = user
+    ? Math.round((user.completeCnt / user.totalCnt) * 100)
     : 0;
 
   return (
@@ -53,9 +53,9 @@ const Main = () => {
         <div className="mainTopSentenceBox">
           <span>투두투두</span>
           <div className="mainTopSentence">
-            {userInfo?.username === undefined
+            {user?.username === undefined
               ? "닉네임을 설정해주세요^^"
-              : `${userInfo.username}님, 오늘도 힘내세요!`}
+              : `${user.username}님, 오늘도 힘내세요!`}
           </div>
         </div>
 
@@ -64,15 +64,15 @@ const Main = () => {
       <StSubDiv2>
         <div className="achievementBox">
           <div className="nicknamePart">
-            {userInfo?.username === undefined
+            {user?.username === undefined
               ? "닉네임이 미설정 상태입니다."
-              : `${userInfo.username}님의 기록`}
+              : `${user.username}님의 기록`}
           </div>
           <div className="todoCnt">
             <img src={plannerCntSvg} alt="todoCntSvgImg" />
-            <span>{userInfo ? userInfo.totalCnt : 0}</span>
+            <span>{user ? user.totalCnt : 0}</span>
             <img src={todoCntSvg} alt="todoCntSvgImg" />
-            <span>{userInfo ? userInfo.completeCnt : 0}</span>
+            <span>{user ? user.completeCnt : 0}</span>
           </div>
         </div>
         <div className="achievementSecondBox">

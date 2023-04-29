@@ -16,7 +16,7 @@ import ModalBasic from "../utils/ModalBasic";
 
 const Statistics = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const { userInfo } = useSelector((state) => state.main);
+  const { total_rows, user } = useSelector((state) => state.main.userInfo);
   const dispatch = useDispatch();
   const [scoreExplain, setScoreExplain] = useState(false);
   const [graphExplain, setGraphExplain] = useState(false);
@@ -31,19 +31,16 @@ const Statistics = () => {
     dispatch(getUserInfo(token1));
   }, []);
 
-  const lastWeekRate = userInfo ? userInfo.lastWeekRate : 0;
-  const thisWeekRate = userInfo ? userInfo?.thisWeekRate : 0;
-
   return (
     <StRootDiv>
       <div id="header">
-        <span>{userInfo?.username}님의 통계</span>
+        <span>{user?.username}님의 순위</span>
       </div>
       <div id="body">
         {/* -- 바디의 상단 파트 -- */}
         <div id="upperPart">
           <div className="subTitle">
-            <p>나의 점수</p>
+            <p>나의 Rank</p>
             <img
               src={info}
               onClick={() => modalHandler("score")}
@@ -52,66 +49,46 @@ const Statistics = () => {
           </div>
           <div className="scoreContainer">
             <div id="weekScore">
-              <div>주간점수</div>
+              <div>월간순위</div>
               <div className="scoreText">
-                {userInfo?.weekScore}점&nbsp;/&nbsp;
-                {userInfo?.weekRank}위
+                {user?.totalRank ? user.totalRank : total_rows}위&nbsp;/&nbsp;
+                {total_rows}명중
               </div>
             </div>
             <div id="monthScore">
-              <div>월간점수</div>
+              <div>총순위</div>
               <div className="scoreText">
-                {userInfo?.monthScore}점&nbsp;/&nbsp;
-                {userInfo?.monthRank}위
+                {user?.totalRank ? user.totalRank : total_rows}위&nbsp;/&nbsp;
+                {total_rows}명중
               </div>
             </div>
           </div>
           <div className="graphContainer">
             <div id="graphContainerText">
-              <div className="change-weekRank"> 지난주대비 달성률 변화</div>
+              <div className="change-weekRank">평균 달성률 변화</div>
               <div>
-                <span className="lastweek">지난주 {lastWeekRate}</span>
+                <span className="lastweek">지난달 {}</span>
                 &nbsp;&nbsp;
-                <span className="thisweek">이번주 {thisWeekRate}</span>
+                <span className="thisweek">이번달 {}</span>
               </div>
               <div id="thisWeekStatus">
-                <div>
-                  {thisWeekRate === 0
-                    ? "이번주도 시작해볼까요?"
-                    : lastWeekRate > 0 && lastWeekRate * 0.5 > thisWeekRate
-                    ? "조금 더 열심히 해봅시다!"
-                    : lastWeekRate * 0.5 < thisWeekRate &&
-                      lastWeekRate * 0.9 > thisWeekRate
-                    ? "저번주의 절반 이상 왔어요!"
-                    : lastWeekRate * 0.9 < thisWeekRate &&
-                      lastWeekRate > thisWeekRate
-                    ? "곧 저번주 달성률을 넘기겠어요!"
-                    : lastWeekRate === thisWeekRate
-                    ? "저번주와 달성률이 같네요!"
-                    : lastWeekRate < thisWeekRate
-                    ? "저번주 달성률을 넘었어요!"
-                    : null}
-                </div>
+                <div>이번달도 시작해볼까요?</div>
               </div>
             </div>
 
             <div id="fistBarChart">
               <div className="eachBarContainer">
                 <div className="eachBar">
-                  <StLastWeekChart height={lastWeekRate}>
-                    <StChartScore className="lastScore">
-                      {lastWeekRate}
-                    </StChartScore>
+                  <StLastWeekChart height={1}>
+                    <StChartScore className="lastScore">{}</StChartScore>
                   </StLastWeekChart>
                 </div>
               </div>
 
               <div className="eachBarContainer">
                 <div className="eachBar">
-                  <StThisWeekChart height={thisWeekRate}>
-                    <StChartScore className="thisScore">
-                      {thisWeekRate}
-                    </StChartScore>
+                  <StThisWeekChart height={1}>
+                    <StChartScore className="thisScore">{}</StChartScore>
                   </StThisWeekChart>
                 </div>
               </div>
