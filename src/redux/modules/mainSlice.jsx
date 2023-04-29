@@ -5,7 +5,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const token = localStorage.getItem("token");
 
 const initialState = {
-  userInfo: null,
+  userInfo: {},
   thisMonthRate: [],
   totalRate: [],
   totalTodo: [],
@@ -13,7 +13,7 @@ const initialState = {
   mainRankListMonthly: [],
   mainRankListSchool: [],
   isLoading: false,
-  error: null,
+  error: {},
 };
 
 export const getUserInfo = createAsyncThunk(
@@ -25,8 +25,9 @@ export const getUserInfo = createAsyncThunk(
           Authorization: `Bearer ${payload}`,
         },
       });
+      console.log("getUserInfo api", data.data);
 
-      return thunkAPI.fulfillWithValue(data.data[0]);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
