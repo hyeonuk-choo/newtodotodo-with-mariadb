@@ -6,7 +6,7 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const InfiniteScrollMonth = () => {
+const OverallRankingInfiniteScroll = () => {
   const navigate = useNavigate();
   const [allUser, setAllUser] = useState([]);
 
@@ -17,7 +17,7 @@ const InfiniteScrollMonth = () => {
   const allUserFunc = async () => {
     try {
       const { data } = await axios.get(
-        `${BASE_URL}/rank/month?page=${page.current}`
+        `${BASE_URL}/rank/overall?page=${page.current}`
       );
 
       setAllUser((prev) => prev.concat(data));
@@ -52,7 +52,7 @@ const InfiniteScrollMonth = () => {
               <div>
                 <StRankingProfile src={profileImgSvg} alt="profileImg" />
 
-                <StRankingNickname>{each.nickname}</StRankingNickname>
+                <StRankingNickname>{each.username}</StRankingNickname>
               </div>
             </div>
 
@@ -64,7 +64,7 @@ const InfiniteScrollMonth = () => {
   );
 };
 
-export default InfiniteScrollMonth;
+export default OverallRankingInfiniteScroll;
 
 const Stdiv = styled.div`
   padding: 0 1rem 0 1rem;

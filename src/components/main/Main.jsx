@@ -9,12 +9,12 @@ import todoCntSvg from "../../assets/img/mainpage/todoCntSvg.svg";
 import info from "../../assets/img/mainpage/info.svg";
 import smallTrophy from "../../assets/img/mainpage/trophy.svg";
 // 컴포넌트
-import InfiniteScroll from "./InfiniteScroll";
-import InfiniteScrollMonth from "./InfiniteScrollMonth";
 import ModalBasic from "../utils/ModalBasic";
 import Navbar from "../utils/Navbar";
 import Dday from "./Dday";
 import { getUserInfo } from "../../redux/modules/mainSlice";
+import MonthlyRankingInfiniteScroll from "./MonthlyRankingInfiniteScroll";
+import OverallRankingInfiniteScroll from "./OverallRankingInfiniteScroll";
 
 const Main = () => {
   const { total_rows, user } = useSelector((s) => s.main.userInfo); // mainSlice
@@ -131,26 +131,30 @@ const Main = () => {
           {toggleValue ? (
             <>
               <StWeeklyRankingBtn onClick={onClickWeekly}>
-                <span>주간 랭킹</span>
+                <span>월간랭킹</span>
               </StWeeklyRankingBtn>
               <StMonthRankingBtn2nd onClick={onClickMonth}>
-                <span>월간 랭킹</span>
+                <span>종합랭킹</span>
               </StMonthRankingBtn2nd>
             </>
           ) : (
             <>
               <StWeeklyRankingBtn2nd onClick={onClickWeekly}>
-                <span>주간 랭킹</span>
+                <span>월간랭킹</span>
               </StWeeklyRankingBtn2nd>
               <StMonthRankingBtn onClick={onClickMonth}>
-                <span>월간 랭킹</span>
+                <span>종합랭킹</span>
               </StMonthRankingBtn>
             </>
           )}
         </StRankingBtnBox>
       </StSubDiv3>
       <StSubDiv4 className="scrollBox">
-        {toggleValue ? <InfiniteScroll /> : <InfiniteScrollMonth />}
+        {toggleValue ? (
+          <MonthlyRankingInfiniteScroll />
+        ) : (
+          <OverallRankingInfiniteScroll />
+        )}
       </StSubDiv4>
       <Navbar home={true} />
 
