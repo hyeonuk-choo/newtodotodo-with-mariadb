@@ -2,26 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-// const nickname = localStorage.getItem("nickname");
-
-export const __getRankScoreData = createAsyncThunk(
-  "__getRankScoreData",
-  async (payload, thunkAPI) => {
-    try {
-      const lastWeekData = await axios.get(`${BASE_URL}/rank/week?page=0`);
-      const weeklyData = await axios.get(`${BASE_URL}/rank/week?page=0`);
-      const monthlyData = await axios.get(`${BASE_URL}/rank/week?page=0`);
-
-      return thunkAPI.fulfillWithValue([
-        lastWeekData.data,
-        weeklyData.data,
-        monthlyData.data,
-      ]);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+const token = localStorage.getItem("token");
 
 export const __getLineChartData = createAsyncThunk(
   "getLineChartData",
@@ -36,7 +17,26 @@ export const __getLineChartData = createAsyncThunk(
   }
 );
 
+export const getRank = createAsyncThunk(
+  "getRank",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`${BASE_URL}/rank`, {
+        headers: {
+          Authorization: `Bearer ${payload}`,
+        },
+      });
+      console.log("getRank의 data", data);
+
+      return thunkAPI.fulfillWithValue(data.data[0]);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
 const initialState = {
+  rank: {}, // console destructure에러때문에 object초기값 할당
   rankScoreData: [{}, {}, {}],
   barData: [{}, {}],
   lineData: [{}, {}],
@@ -51,17 +51,6 @@ export const statisticsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(__getRankScoreData.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(__getRankScoreData.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.rankScoreData = action.payload;
-      })
-      .addCase(__getRankScoreData.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload.message;
-      })
       .addCase(__getLineChartData.pending, (state) => {
         state.isLoading = true;
       })
@@ -70,6 +59,17 @@ export const statisticsSlice = createSlice({
         state.lineData = action.payload;
       })
       .addCase(__getLineChartData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(getRank.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getRank.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.rank = action.payload;
+      })
+      .addCase(getRank.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload.message;
       });

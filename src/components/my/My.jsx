@@ -8,6 +8,7 @@ import Navbar from "../utils/Navbar";
 import { getUserInfo } from "../../redux/modules/mainSlice";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
+import { getRank } from "../../redux/modules/statisticsSlice";
 
 // My.jsx
 const My = () => {
@@ -15,10 +16,13 @@ const My = () => {
   const dispatch = useDispatch();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const token = localStorage.getItem("token");
-  const { total_rows, user } = useSelector((s) => s.main.userInfo); // mainSlice
-
+  const { total_rows, user } = useSelector((state) => state.main.userInfo);
+  const { monthRank, totalRank } = useSelector(
+    (state) => state.statistics.rank
+  );
   useEffect(() => {
     dispatch(getUserInfo(token));
+    dispatch(getRank(token));
   }, []);
 
   const [imagePreview, setImagePreview] = useState(null);
@@ -125,7 +129,7 @@ const My = () => {
         <div className="edit-profile">
           {editMode ? (
             <form onSubmit={handleSubmit}>
-              <div className="row">이번달 순위: {user?.monthRank}</div>
+              <div className="row">종합 순위: {totalRank}</div>
               <div className="row">E-mail: {user?.email}</div>
               <div className="row">
                 <label htmlFor="username">유저 이름: </label>
@@ -179,7 +183,7 @@ const My = () => {
             </form>
           ) : (
             <>
-              <div className="row">이번달 순위: {user?.totalRank}</div>
+              <div className="row">종합 순위: {totalRank}</div>
               <div className="row">E-mail: {user?.email}</div>
               <div className="row">유저 이름: {user?.username}</div>
               <div className="row">학교 이름: {user?.school}</div>

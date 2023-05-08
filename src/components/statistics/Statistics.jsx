@@ -13,11 +13,16 @@ import LineChart from "./LineChart";
 import Navbar from "../utils/Navbar";
 import { getUserInfo } from "../../redux/modules/mainSlice";
 import ModalBasic from "../utils/ModalBasic";
+import { getRank } from "../../redux/modules/statisticsSlice";
 
 const Statistics = () => {
+  const dispatch = useDispatch();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const { total_rows, user } = useSelector((state) => state.main.userInfo);
-  const dispatch = useDispatch();
+  const { monthRank, totalRank } = useSelector(
+    (state) => state.statistics.rank
+  );
+  console.log(monthRank);
   const [scoreExplain, setScoreExplain] = useState(false);
   const [graphExplain, setGraphExplain] = useState(false);
   const token1 = localStorage.getItem("token");
@@ -29,6 +34,7 @@ const Statistics = () => {
 
   useEffect(() => {
     dispatch(getUserInfo(token1));
+    dispatch(getRank(token1));
   }, []);
 
   return (
@@ -51,14 +57,14 @@ const Statistics = () => {
             <div id="weekScore">
               <div>월간순위</div>
               <div className="scoreText">
-                {user?.totalRank ? user.totalRank : total_rows}위&nbsp;/&nbsp;
+                {monthRank}위&nbsp;/&nbsp;
                 {total_rows}명중
               </div>
             </div>
             <div id="monthScore">
               <div>총순위</div>
               <div className="scoreText">
-                {user?.totalRank ? user.totalRank : total_rows}위&nbsp;/&nbsp;
+                {totalRank}위&nbsp;/&nbsp;
                 {total_rows}명중
               </div>
             </div>
