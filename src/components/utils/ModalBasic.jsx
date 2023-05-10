@@ -172,7 +172,6 @@ const StModalContainer = styled.div`
     img {
       box-sizing: border-box;
       padding: 6%;
-      width: 64%;
       height: 100%;
       flex: ${(p) => (p.modalTitle ? 3 : 5)};
     }
