@@ -45,7 +45,7 @@ const Main = () => {
           <div className="mainTopSentence">
             {user?.username === undefined
               ? "닉네임을 설정해주세요^^"
-              : `${user.username}님, 오늘도 힘내세요!`}
+              : `${user.username}님, 환영합니다!`}
           </div>
         </div>
 
@@ -151,14 +151,14 @@ const Main = () => {
       {/* -------------- 모달창 ---------------*/}
       {modalWindow ? (
         <ModalBasic
-          modalWidth={50 + "%"}
+          modalWidth={70 + "%"}
           modalHeight={40 + "%"}
           modalTop={(100 - 40) / 2 + "%"}
-          modalLeft={25 + "%"}
+          modalLeft={15 + "%"}
           setModalWindow={setModalWindow}
           modalTitle="랭킹 산정 방법"
           modalImage={largeTrophy}
-          modalContent="주간/월간 랭킹은 일주일/한달간 측정한 투두 달성률 누적합계가 높은 순으로 순위가 결정됩니다."
+          modalContent="월간/종합 랭킹은 기간에 따라 측정한 플래너 달성률이 높은 순으로 순위가 결정됩니다."
         />
       ) : null}
     </StRootDiv>
@@ -195,7 +195,6 @@ const StSubDiv1 = styled.div`
   }
 
   .mainTopSentence {
-    margin-top: 8px;
     font-weight: 600;
     font-size: 2.2vh;
   }
@@ -333,7 +332,7 @@ const StRankingPhrases = styled.div`
   flex-direction: row;
   align-items: center;
   background-color: #fafafa;
-  padding: 0 0 1vh 2.4rem;
+  padding: 0 0 1vh 6%;
 
   img {
     padding-top: 1rem;
@@ -360,7 +359,7 @@ const StRankingPhrases = styled.div`
 const StRankingBtnBox = styled.div`
   font-weight: 600;
   background-color: #fafafa;
-  padding: 0 0 0 2rem;
+  padding: 0 0 0 5%;
   height: 5vh;
 
   button {

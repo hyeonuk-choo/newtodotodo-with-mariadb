@@ -3,13 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
+
 // 이미지
 import trophy from "../../assets/img/mainpage/trophy.svg";
 import info from "../../assets/img/mainpage/info.svg";
 import school from "../../assets/img/mainpage/school.svg";
 import infoSvg from "../../assets/img/mainpage/info.svg";
+
 // 컴포넌트
-import LineChart from "./LineChart";
 import Navbar from "../utils/Navbar";
 import ModalBasic from "../utils/ModalBasic";
 import { getUserInfo } from "../../redux/modules/mainSlice";
@@ -72,7 +73,7 @@ const Statistics = () => {
               </div>
             </div>
             <div id="monthScore">
-              <div>총순위</div>
+              <div>종합순위</div>
               <div className="scoreText">
                 {totalRank}위&nbsp;/&nbsp;
                 {total_rows}명중
@@ -146,9 +147,7 @@ const Statistics = () => {
               alt="infoImg"
             />
           </div>
-          <div id="chartContainer">
-            <LineChart />
-          </div>
+          <div id="chartContainer"></div>
         </div>
       </div>
 
@@ -156,22 +155,22 @@ const Statistics = () => {
       {scoreExplain ? (
         <ModalBasic
           setScoreExplain={setScoreExplain}
-          modalWidth={50 + "%"}
-          modalHeight={40 + "%"}
-          modalTop={(100 - 40) / 2 + "%"}
-          modalLeft={(100 - 50) / 2 + "%"}
-          modalTitle="나의 점수란?"
+          modalWidth={70 + "%"}
+          modalHeight={50 + "%"}
+          modalLeft={(100 - 70) / 2 + "%"}
+          modalTop={(100 - 50) / 2 + "%"}
+          modalTitle="나의 Rank 설명"
           modalImage={school}
-          modalContent="나의 점수는 주간점수/월간점수로 나뉘며, 지난주대비 금주의 달성률을 나타냅니다."
+          modalContent="작성한 플래너중 달성완료한 비율(달성률)에 따라 월간순위 및 종합순위를 계산했습니다. 순위 하단에는 지난달과 이번달의 달성률을 비교했습니다."
         />
       ) : null}
       {graphExplain ? (
         <ModalBasic
           setGraphExplain={setGraphExplain}
-          modalWidth={50 + "%"}
+          modalWidth={70 + "%"}
           modalHeight={40 + "%"}
           modalTop={(100 - 40) / 2 + "%"}
-          modalLeft={(100 - 50) / 2 + "%"}
+          modalLeft={(100 - 70) / 2 + "%"}
           modalTitle="주간 그래프란?"
           modalImage={school}
           modalContent="주간 그래프는 금주 월요일~일요일까지의 달성률 추이를 나타냅니다."
@@ -326,7 +325,7 @@ const StRootDiv = styled.div`
               width: 90%;
               height: 100%;
               margin: 0;
-              font-size: 2vh;
+              font-size: 80%;
               color: #ff7b00;
               font-weight: bold;
 

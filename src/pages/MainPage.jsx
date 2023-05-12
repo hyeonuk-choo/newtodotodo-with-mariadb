@@ -34,9 +34,7 @@ const MainPage = () => {
 
   return (
     <>
-      {loginOn ? (
-        ""
-      ) : (
+      {loginOn ? null : (
         <StNeedLogin>
           <StNeedLoginModal>
             <StLoginModalTop>자동 로그아웃 안내</StLoginModalTop>

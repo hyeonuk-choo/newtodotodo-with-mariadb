@@ -151,7 +151,7 @@ const StVisible = styled.span`
 `;
 
 const StPrivacy = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
   margin-bottom: 4vh;

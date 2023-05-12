@@ -32,7 +32,7 @@ const Dday = () => {
 export default Dday;
 
 const StDdayBox = styled.div`
-  width: 9rem;
+  width: 35%;
   height: 7vh;
   font-size: 2.3vh;
   font-weight: 600;
