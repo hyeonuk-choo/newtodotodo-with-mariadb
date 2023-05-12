@@ -55,7 +55,7 @@ const MonthlyRankingInfiniteScroll = () => {
               </div>
             </div>
 
-            <div className="secondInner">{each.total_rate}</div>
+            <div className="secondInner">{each.month_rate}</div>
           </StRankingBox>
         ))}
       <StRefDiv ref={targetRef}></StRefDiv>

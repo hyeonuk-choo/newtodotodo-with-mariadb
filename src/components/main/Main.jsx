@@ -17,16 +17,16 @@ import MonthlyRankingInfiniteScroll from "./MonthlyRankingInfiniteScroll";
 import OverallRankingInfiniteScroll from "./OverallRankingInfiniteScroll";
 
 const Main = () => {
-  const { total_rows, user } = useSelector((s) => s.main.userInfo); // mainSlice
+  const { total_rows, user } = useSelector((state) => state.main.userInfo); // mainSlice
   const [toggleValue, setToggleValue] = useState(true);
   const [modalWindow, setModalWindow] = useState(false);
   const dispatch = useDispatch();
-  const token1 = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   // 비동기통신 로직을 왜 Thunk함수를 Slice에 정의해서 써야하는가? 에 대한 의문으로 비동기 통신 로직을 UI컴포넌트에 바로 작성해보았고 비동기통신 로직을 UI컴포넌트에 구현 해도 동작에 이상없으나, 다른 컴포넌트에서 해당state를 구독할 때, 새로고침시 이슈발생
 
   useEffect(() => {
-    dispatch(getUserInfo(token1));
+    dispatch(getUserInfo(token));
   }, [dispatch]);
 
   const onClickWeekly = () => {
@@ -36,16 +36,6 @@ const Main = () => {
   const onClickMonth = () => {
     setToggleValue(false);
   };
-
-  console.log("user", user);
-
-  const completeRate = user
-    ? Math.round((user.completeCnt / user.totalCnt) * 100)
-    : 0;
-
-  const totalRate = user
-    ? Math.round((user.completeCnt / user.totalCnt) * 100)
-    : 0;
 
   return (
     <StRootDiv>
@@ -81,14 +71,14 @@ const Main = () => {
               이번달 플래너 달성률
               <div>
                 {/* reload시 View에 NaN을 0으로 대체 */}
-                {isNaN(totalRate) ? 0 : totalRate} %
+                {isNaN(user?.thisMonthRate) ? 0 : user?.thisMonthRate} %
               </div>
             </div>
 
             <StProgressBarBox>
               {/* attribute NaN 관련 디버깅*/}
               <StProgressBar
-                width={isNaN(totalRate) ? 0 : totalRate}
+                width={isNaN(user?.thisMonthRate) ? 0 : user?.thisMonthRate}
               ></StProgressBar>
             </StProgressBarBox>
           </div>
@@ -98,14 +88,14 @@ const Main = () => {
               플래너 총 달성률
               <div>
                 {/* reload시 View에 NaN을 0으로 대체 */}
-                {isNaN(totalRate) ? 0 : totalRate} %
+                {isNaN(user?.totalRate) ? 0 : user?.totalRate} %
               </div>
             </div>
 
             <StProgressBarBox>
               {/* attribute NaN 관련 디버깅*/}
               <StProgressBar
-                width={isNaN(totalRate) ? 0 : totalRate}
+                width={isNaN(user?.totalRate) ? 0 : user?.totalRate}
               ></StProgressBar>
             </StProgressBarBox>
           </div>
