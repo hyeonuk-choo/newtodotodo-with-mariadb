@@ -5,11 +5,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 // 컴포넌트
+import Layout from "../components/utils/Layout";
 import MainPage from "../pages/MainPage";
 import PlannerPage from "../pages/PlannerPage";
 import StatisticsPage from "../pages/StatisticsPage";
 import MyPage from "../pages/MyPage";
-import Layout from "../components/utils/Layout";
 import Login from "../components/login/Login";
 import Signup from "../components/login/Signup";
 import { logout } from "../redux/modules/loginSlice";

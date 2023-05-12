@@ -6,9 +6,7 @@ import bg5 from "./assets/img/bg5.jpg";
 function App() {
   return (
     <StContainer>
-      <div className="wrap">
-        <Router />
-      </div>
+      <Router />
     </StContainer>
   );
 }
@@ -16,22 +14,14 @@ function App() {
 export default App;
 
 const StContainer = styled.div`
+  box-sizing: border-box;
   position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url(${bg5}) no-repeat;
-  background-size: 60% 100%;
+  background: url(${bg5});
+  background-size: 50% 100%;
   background-position: left;
-
   display: flex;
   justify-content: center;
-  box-sizing: border-box;
-
-  .wrap {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    left: 55%;
-  }
 `;

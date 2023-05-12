@@ -6,7 +6,13 @@ const Layout = ({ children }) => {
 };
 
 const StLayout = styled.div`
-  width: 45%;
+  width: 100vw;
+  @media screen and (min-width: 550px) {
+    max-width: 550px;
+  }
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
   height: 100vh;
   background-color: #fafafa;
   position: relative;
