@@ -1,14 +1,17 @@
+// 라이브러리
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+// 컴포넌트
 import { StTodo, StBody, StRootDiv } from "./My.styles";
 import Navbar from "../utils/Navbar";
 import { getUserInfo } from "../../redux/modules/mainSlice";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
 import { getRank } from "../../redux/modules/statisticsSlice";
+import threeDotSvg from "../../assets/img/threeDotSvg.svg";
+import MiniModal from "../utils/MiniModal";
 
 // My.jsx
 const My = () => {
@@ -26,6 +29,7 @@ const My = () => {
   }, []);
 
   const [imagePreview, setImagePreview] = useState(null);
+  const [menuModal, setMenuModal] = useState(false);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -35,25 +39,6 @@ const My = () => {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
-
-      // // 서버에 이미지 업로드 API통신
-      // const formData = new FormData();
-      // formData.append("profileImage", file);
-      // formData.append("userId", userInfo.id); // 필요한 경우 사용자 ID를 추가합니다.
-
-      // try {
-      //   await axios.post(`${BASE_URL}/upload`, formData, {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       Authorization: `Bearer ${token}`, // JWT 토큰이 필요한 경우 헤더에 추가합니다.
-      //     },
-      //   });
-      //   console.log("이미지 업로드 성공");
-      //   // 서버에서 사용자 정보를 다시 가져옵니다.
-      //   dispatch(getUserInfo(token));
-      // } catch (error) {
-      //   console.log("이미지 업로드 실패", error);
-      // }
     }
   };
 
@@ -103,6 +88,17 @@ const My = () => {
         >
           Logout
         </button>
+        <div className="threeDotsBox">
+          <img
+            src={threeDotSvg}
+            alt="threeDotSvg"
+            onClick={() => {
+              setMenuModal(!menuModal);
+            }}
+          />
+          {/* -------- 헤더 모달 메뉴 ---------*/}
+          {menuModal ? <MiniModal /> : null}
+        </div>
       </div>
 
       {/* -------- 바디부분 시작 ---------*/}

@@ -201,7 +201,7 @@ export const StRootDiv = styled.div`
 
     .actionButton {
       position: absolute;
-      right: 5%;
+      right: 3%;
       padding: 0.5rem 1rem 0 1rem;
       font-size: 1rem;
       font-weight: 600;
@@ -213,10 +213,35 @@ export const StRootDiv = styled.div`
     }
 
     .logoutButton {
+      @media screen and (max-width: 500px) {
+        display: none;
+      }
+      @media screen and (min-width: 500px) {
+        display: block;
+      }
     }
 
     .logoutButton:hover {
       color: #ff5353;
+    }
+
+    .threeDotsBox {
+      position: absolute;
+      right: 1%;
+      margin: 0.5rem 1rem 0 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      background-color: transparent;
+      @media screen and (max-width: 500px) {
+        display: block;
+      }
+      @media screen and (min-width: 500px) {
+        display: none;
+      }
     }
   }
 `;
