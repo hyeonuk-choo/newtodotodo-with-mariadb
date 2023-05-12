@@ -11,9 +11,12 @@ import infoSvg from "../../assets/img/mainpage/info.svg";
 // 컴포넌트
 import LineChart from "./LineChart";
 import Navbar from "../utils/Navbar";
-import { getUserInfo } from "../../redux/modules/mainSlice";
 import ModalBasic from "../utils/ModalBasic";
-import { getRank } from "../../redux/modules/statisticsSlice";
+import { getUserInfo } from "../../redux/modules/mainSlice";
+import {
+  getAchievementRate,
+  getRank,
+} from "../../redux/modules/statisticsSlice";
 
 const Statistics = () => {
   const dispatch = useDispatch();
@@ -22,10 +25,16 @@ const Statistics = () => {
   const { monthRank, totalRank } = useSelector(
     (state) => state.statistics.rank
   );
-  console.log(monthRank);
+  const {
+    thisMonth_count,
+    thisMonth_completed_count,
+    lastMonth_count,
+    lastMonth_completed_count,
+  } = useSelector((state) => state.statistics.achievementRate);
+
   const [scoreExplain, setScoreExplain] = useState(false);
   const [graphExplain, setGraphExplain] = useState(false);
-  const token1 = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   const modalHandler = (param) => {
     if (param === "score") setScoreExplain(true);
@@ -33,8 +42,9 @@ const Statistics = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserInfo(token1));
-    dispatch(getRank(token1));
+    dispatch(getUserInfo(token));
+    dispatch(getRank(token));
+    dispatch(getAchievementRate(token));
   }, []);
 
   return (
@@ -71,7 +81,7 @@ const Statistics = () => {
           </div>
           <div className="graphContainer">
             <div id="graphContainerText">
-              <div className="change-weekRank">평균 달성률 변화</div>
+              <div className="change-weekRank">월간 달성률 변화</div>
               <div>
                 <span className="lastweek">지난달 {}</span>
                 &nbsp;&nbsp;
@@ -85,16 +95,40 @@ const Statistics = () => {
             <div id="fistBarChart">
               <div className="eachBarContainer">
                 <div className="eachBar">
-                  <StLastWeekChart height={1}>
-                    <StChartScore className="lastScore">{}</StChartScore>
+                  <StLastWeekChart
+                    height={
+                      isNaN(lastMonth_completed_count / lastMonth_count)
+                        ? 0
+                        : (lastMonth_completed_count / lastMonth_count) * 100
+                    }
+                  >
+                    <StChartScore className="lastScore">
+                      {isNaN(lastMonth_completed_count / lastMonth_count)
+                        ? 0
+                        : Math.floor(
+                            (lastMonth_completed_count / lastMonth_count) * 100
+                          )}
+                    </StChartScore>
                   </StLastWeekChart>
                 </div>
               </div>
 
               <div className="eachBarContainer">
                 <div className="eachBar">
-                  <StThisWeekChart height={1}>
-                    <StChartScore className="thisScore">{}</StChartScore>
+                  <StThisWeekChart
+                    height={
+                      isNaN(thisMonth_completed_count / thisMonth_count)
+                        ? 0
+                        : (thisMonth_completed_count / thisMonth_count) * 100
+                    }
+                  >
+                    <StChartScore className="thisScore">
+                      {isNaN(thisMonth_completed_count / thisMonth_count)
+                        ? 0
+                        : Math.floor(
+                            (thisMonth_completed_count / thisMonth_count) * 100
+                          )}
+                    </StChartScore>
                   </StThisWeekChart>
                 </div>
               </div>
