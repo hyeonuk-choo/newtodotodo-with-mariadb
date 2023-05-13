@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const token = localStorage.getItem("token");
 
 export const getRank = createAsyncThunk(
   "getRank",

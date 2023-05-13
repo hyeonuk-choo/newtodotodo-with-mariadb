@@ -1,6 +1,6 @@
+// eslint-disable-next-line
 import Router from "./shared/Router";
-import todoSvg from "./assets/img/todoSvg.svg";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import bg5 from "./assets/img/bg5.jpg";
 
 function App() {
