@@ -18,6 +18,7 @@ import {
   getAchievementRate,
   getRank,
 } from "../../redux/modules/statisticsSlice";
+import Charts from "./Charts";
 
 const Statistics = () => {
   const dispatch = useDispatch();
@@ -147,7 +148,10 @@ const Statistics = () => {
               alt="infoImg"
             />
           </div>
-          <div id="chartContainer"></div>
+
+          <div id="chartContainer">
+            <Charts user={user} />
+          </div>
         </div>
       </div>
 
@@ -397,10 +401,17 @@ const StRootDiv = styled.div`
 
       #chartContainer {
         box-sizing: border-box;
-        height: calc(100% - 15%);
-        width: 92%;
-        margin: auto;
-        padding: 2vh 0;
+        height: calc(100% - 20%);
+        width: 93%;
+        margin: 1vh auto 0 auto;
+        padding: 1vh 0 0 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: rgba(17, 17, 17, 0.05) 0px 4px 15px;
+        background-color: white;
+        border-radius: 15px;
       }
     }
   }
