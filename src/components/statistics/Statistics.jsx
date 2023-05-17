@@ -141,7 +141,7 @@ const Statistics = () => {
         {/* -- 바디의 하단파트 -- */}
         <div id="lowerPart">
           <div className="subTitle">
-            <div>주간 그래프</div>
+            <div>최근 플래너 작성량</div>
             <img
               src={info}
               onClick={() => modalHandler("graph")}
@@ -172,12 +172,12 @@ const Statistics = () => {
         <ModalBasic
           setGraphExplain={setGraphExplain}
           modalWidth={70 + "%"}
-          modalHeight={40 + "%"}
-          modalTop={(100 - 40) / 2 + "%"}
+          modalHeight={50 + "%"}
+          modalTop={(100 - 50) / 2 + "%"}
           modalLeft={(100 - 70) / 2 + "%"}
-          modalTitle="주간 그래프란?"
+          modalTitle="최근 플래너란?"
           modalImage={school}
-          modalContent="주간 그래프는 금주 월요일~일요일까지의 달성률 추이를 나타냅니다."
+          modalContent="최근 5일간의 플래너 작성량을 나타내는 그래프입니다. 핑크색은 자신의 최근 플래너 작성량, 녹색은 현재 1등의 플래너 최근 작성량을 나타냅니다."
         />
       ) : null}
       {/* ---------- 네비게이션바 --------- */}
