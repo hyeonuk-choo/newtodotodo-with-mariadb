@@ -45,7 +45,7 @@ const Login = () => {
     e.preventDefault();
 
     const response = await dispatch(getAuthentication({ email, password }));
-    console.log("response", response);
+
     if (response.payload) {
       navigate("/main");
     } else {

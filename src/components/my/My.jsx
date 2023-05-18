@@ -54,7 +54,6 @@ const My = () => {
     setUserProfile((prev) => ({ ...prev, [name]: value }));
   };
 
-  console.log("함수 빠져나온 후", userProfile);
   const [editMode, setEditMode] = useState(false);
 
   const handleSubmit = async (e) => {

@@ -24,7 +24,6 @@ export const getUserInfo = createAsyncThunk(
           Authorization: `Bearer ${payload}`,
         },
       });
-      console.log("getUserInfo api", data);
 
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {

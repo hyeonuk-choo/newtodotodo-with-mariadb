@@ -26,7 +26,6 @@ const Charts = ({ user, token }) => {
         }
       );
 
-      console.log("getRecentblabla", data.data);
       setLineChartData(data.data);
     } catch (error) {
       console.error(error);

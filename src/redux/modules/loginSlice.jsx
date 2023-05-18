@@ -101,7 +101,7 @@ export const loginSlice = createSlice({
       })
       .addCase(getAuthentication.fulfilled, (state, action) => {
         state.isLoading = false;
-        // console.log("action.payload", action.payload);
+
         state.token = action.payload;
       })
       .addCase(getAuthentication.rejected, (state, action) => {

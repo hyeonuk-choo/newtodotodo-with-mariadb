@@ -12,7 +12,6 @@ export const getRank = createAsyncThunk(
           Authorization: `Bearer ${payload}`,
         },
       });
-      console.log("getRank의 data", data);
 
       return thunkAPI.fulfillWithValue(data.data[0]);
     } catch (error) {
@@ -30,7 +29,6 @@ export const getAchievementRate = createAsyncThunk(
           Authorization: `Bearer ${payload}`,
         },
       });
-      console.log("getAchievementRate data", data);
 
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
