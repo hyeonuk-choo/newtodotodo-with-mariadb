@@ -150,7 +150,7 @@ const Statistics = () => {
           </div>
 
           <div id="chartContainer">
-            <Charts user={user} />
+            <Charts user={user} token={token} />
           </div>
         </div>
       </div>
