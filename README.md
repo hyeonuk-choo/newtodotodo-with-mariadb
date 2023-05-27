@@ -22,7 +22,13 @@
   * Express
   * MariaDB
   * Github-Repository: [링크](https://github.com/hyeonuk-choo/express-server-with-mariadb.git)
-  
+
+<br/>
+
+<h2>⚙ 서비스 아키텍쳐</h2>
+
+![서비스 아키텍처](https://github.com/hyeonuk-choo/newtodotodo-with-mariadb/assets/108967896/8cc22b8a-2968-41d4-b5d8-2223dfc8e86a)
+
 <br/>
 <h2>📝 서비스 설명 </h2>
 <ul>
@@ -39,8 +45,3 @@
   <li>(추가예정) 프로필 사진, 상태메세지, 자랑이미지로 마이페이지 관리</li>
 </ul>
 
-<br/>
-
-<h2>⚙ 서비스 아키텍쳐</h2>
-
-![서비스 아키텍처](https://github.com/hyeonuk-choo/newtodotodo-with-mariadb/assets/108967896/8cc22b8a-2968-41d4-b5d8-2223dfc8e86a)
