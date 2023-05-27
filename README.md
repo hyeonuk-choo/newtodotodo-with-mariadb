@@ -2,14 +2,9 @@
 <h1>통계 플래너📑, <img width='120px' src='https://user-images.githubusercontent.com/98303004/194283462-7d70182b-d4d9-4291-b050-5983b0177374.png' alt='logo'/> 를 소개 합니다!</h1>
 
 ### 📪 주소 
-- 데모 URL : https://newtodotodo.netlify.app/
+- 서비스URL : [서비스 링크](https://newplanner.netlify.app/)
 <br/>
 
-### ⚙ 서비스 아키텍쳐
-
-![서비스 아키텍쳐](https://github.com/MungT/ToDoList_backend/blob/main/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png)
-<br/>
-<br/>
 <h2>🛠 Skills </h2>
 
 * 프론트엔드
@@ -42,3 +37,8 @@
   <li>(추가예정) 프로필 사진, 상태메세지, 자랑이미지로 마이페이지 관리</li>
 </ul>
 
+<br/>
+
+### ⚙ 서비스 아키텍쳐
+
+![서비스 아키텍처](https://github.com/hyeonuk-choo/newtodotodo-with-mariadb/assets/108967896/8cc22b8a-2968-41d4-b5d8-2223dfc8e86a)
