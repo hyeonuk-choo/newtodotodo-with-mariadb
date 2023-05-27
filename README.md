@@ -1,8 +1,10 @@
 <img width='100%' height='500' src='https://user-images.githubusercontent.com/98303004/194334684-7ee7e923-9abd-4260-b3a6-256ee2c65682.png' alt='img1'/>
 <h1>통계 플래너📑, <img width='120px' src='https://user-images.githubusercontent.com/98303004/194283462-7d70182b-d4d9-4291-b050-5983b0177374.png' alt='logo'/> 를 소개 합니다!</h1>
 
-### 📪 주소 
+<h3>📪 주소</h3>
+
 - 서비스URL : [서비스 링크](https://newplanner.netlify.app/)
+
 <br/>
 
 <h2>🛠 Skills </h2>
@@ -19,7 +21,7 @@
   * Node.js
   * Express
   * MariaDB
-  * Repository: https://github.com/hyeonuk-choo/express-server-with-mariadb.git
+  * Github-Repository: [링크](https://github.com/hyeonuk-choo/express-server-with-mariadb.git)
   
 <br/>
 <h2>📝 서비스 설명 </h2>
@@ -39,6 +41,6 @@
 
 <br/>
 
-### ⚙ 서비스 아키텍쳐
+<h2>⚙ 서비스 아키텍쳐</h2>
 
 ![서비스 아키텍처](https://github.com/hyeonuk-choo/newtodotodo-with-mariadb/assets/108967896/8cc22b8a-2968-41d4-b5d8-2223dfc8e86a)
