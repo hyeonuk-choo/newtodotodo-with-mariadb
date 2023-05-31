@@ -27,7 +27,7 @@
 
 <h2>⚙ 서비스 아키텍쳐</h2>
 
-![서비스 아키텍처](https://github.com/hyeonuk-choo/newtodotodo-with-mariadb/assets/108967896/8cc22b8a-2968-41d4-b5d8-2223dfc8e86a)
+![서비스 아키텍처](https://github.com/hyeonuk-choo/newtodotodo-with-mariadb/assets/108967896/b14fa406-359e-4407-a8e0-555af3c3f28b)
 
 <br/>
 <h2>📝 서비스 설명 </h2>
