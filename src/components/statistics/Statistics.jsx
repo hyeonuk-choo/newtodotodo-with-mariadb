@@ -44,7 +44,6 @@ const Statistics = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserInfo(token));
     dispatch(getRank(token));
     dispatch(getAchievementRate(token));
   }, []);

@@ -5,13 +5,7 @@ import styled from "styled-components";
 import whitePlusSvg from "../../assets/img/whitePlusSvg.svg";
 import axios from "axios";
 
-const TodoAddBtn = ({ todos, onClickAdd }) => {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const nickname = localStorage.getItem("nickname");
-  const uploadRef = useRef(null);
-
+const TodoAddBtn = ({ onClickAdd }) => {
   return (
     <StTodoAddBtn
       onClick={() => {

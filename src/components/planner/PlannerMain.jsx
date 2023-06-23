@@ -123,10 +123,6 @@ const PlannerMain = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserInfo(token));
-  }, []);
-
-  useEffect(() => {
     getTodos();
   }, [user]);
 
@@ -343,7 +339,7 @@ const PlannerMain = () => {
       {/* --------- 네비게이션바 ----------*/}
       <Navbar planner={true} />
       {/* --------- 투두 추가 고정버튼 ----------*/}
-      <TodoAddBtn todos={todos} setTodos={setTodos} onClickAdd={onClickAdd} />
+      <TodoAddBtn onClickAdd={onClickAdd} />
       {/* --------- 수정/삭제 모달창 ----------*/}
       {modalId ? (
         <ModalBasic

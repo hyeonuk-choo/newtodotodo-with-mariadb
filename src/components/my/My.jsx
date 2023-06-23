@@ -24,7 +24,6 @@ const My = () => {
     (state) => state.statistics.rank
   );
   useEffect(() => {
-    dispatch(getUserInfo(token));
     dispatch(getRank(token));
   }, []);
 
