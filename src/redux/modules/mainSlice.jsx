@@ -3,18 +3,6 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const initialState = {
-  userInfo: {},
-  thisMonthRate: [],
-  totalRate: [],
-  totalTodo: [],
-  mainRankList: [],
-  mainRankListMonthly: [],
-  mainRankListSchool: [],
-  isLoading: false,
-  error: {},
-};
-
 export const getUserInfo = createAsyncThunk(
   "mainSlice/getUserInfo",
   async (payload, thunkAPI) => {
@@ -31,6 +19,18 @@ export const getUserInfo = createAsyncThunk(
     }
   }
 );
+
+const initialState = {
+  userInfo: {},
+  thisMonthRate: [],
+  totalRate: [],
+  totalTodo: [],
+  mainRankList: [],
+  mainRankListMonthly: [],
+  mainRankListSchool: [],
+  isLoading: false,
+  error: {},
+};
 
 const mainSlice = createSlice({
   name: "mainSlice",
