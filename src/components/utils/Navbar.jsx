@@ -74,7 +74,7 @@ const Navbar = (props) => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);
 
 const StNav = styled.div`
   box-sizing: border-box;

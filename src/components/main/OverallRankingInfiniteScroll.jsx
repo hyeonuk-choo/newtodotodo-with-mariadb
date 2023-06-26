@@ -24,7 +24,9 @@ const OverallRankingInfiniteScroll = () => {
     } catch (error) {}
   };
 
-  // useEffect(() => allUserFunc(), []); // 주의: useEffect 라우팅후 unmount시 error발생, {}블록 생략한 한줄짜리는 return 반환값을 뜻함. useEffect에서 return 값은 unmount시 동작하는 clean-up함수다.
+  // useEffect(() => allUserFunc(), []);
+  // 주의: useEffect 라우팅후 unmount시 error발생,
+  // {}블록 생략한 한줄짜리는 return 반환값을 뜻함. useEffect에서 return 값은 unmount시 동작하는 clean-up함수다.
 
   const observerCallback = (entries, observer) => {
     entries.forEach((entry) => {
@@ -64,7 +66,7 @@ const OverallRankingInfiniteScroll = () => {
   );
 };
 
-export default OverallRankingInfiniteScroll;
+export default React.memo(OverallRankingInfiniteScroll);
 
 const Stdiv = styled.div`
   padding: 0 1rem 0 1rem;

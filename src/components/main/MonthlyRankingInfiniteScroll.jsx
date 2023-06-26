@@ -63,7 +63,7 @@ const MonthlyRankingInfiniteScroll = () => {
   );
 };
 
-export default MonthlyRankingInfiniteScroll;
+export default React.memo(MonthlyRankingInfiniteScroll);
 
 const Stdiv = styled.div`
   padding: 0 1rem 0 1rem;

@@ -29,7 +29,7 @@ const Dday = () => {
   );
 };
 
-export default Dday;
+export default React.memo(Dday);
 
 const StDdayBox = styled.div`
   width: 35%;
