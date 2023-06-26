@@ -1,10 +1,13 @@
 // 리덕스툴킷 스토어함수
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+
 // 리듀서
 import mainSlice from "../modules/mainSlice";
 import statisticsSlice from "../modules/statisticsSlice";
 import PlannerSlice from "../modules/plannerSlice";
 import loginSlice from "../modules/loginSlice";
+
+// 라이브러리
 import {
   persistStore,
   persistReducer,
